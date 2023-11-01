@@ -6,6 +6,10 @@ export default {
       colors: {
         secondary: "#13EA76",
         text: "#161616",
+        "secondary-text": "#C9C9C9",
+      },
+      listStyleImage: {
+        checkmark: 'url("./src/assets/checkmark.svg")',
       },
     },
   },
