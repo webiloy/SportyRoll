@@ -1,3 +1,4 @@
+import Logo from "../../assets/Logo.svg";
 import { GreenLinkBtn } from "../buttons/GreenLinkBtn";
 import { NavScroll } from "./NavbarScrollFunc";
 import { Link } from "react-router-dom";
@@ -9,8 +10,8 @@ export function Navbar() {
     <div
       className={`${NavBackground} ${NavOpacity} duration-300 ease-in-out flex justify-between p-6 px-12 fixed z-50 top-0 w-full text-white items-center child:items-center h-[5.5rem] bg-black`}
     >
-      <div className="flex gap-12 ">
-        <Link to={"/"}>
+      <div className="flex gap-12">
+        <Link to={"/"} className="flex items-center justify-center gap-2">
           <h1 className="font-extrabold text-lg cursor-pointer">Sporty Roll</h1>
         </Link>
         <ul className="flex gap-6 child:cursor-pointer">
