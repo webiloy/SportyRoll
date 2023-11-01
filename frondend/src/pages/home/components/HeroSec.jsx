@@ -3,7 +3,7 @@ import heroImage from "../../../assets/HeroImage.png";
 export function HeroSec() {
   return (
     <div
-      className="flex flex-col bg-black h-[80dvh] md:h-[90dvh]  w-full z-40 bg-no-repeat bg-cover max-w-[1600px] px-10 md:px-16 lg:px-24"
+      className="flex flex-col bg-black h-[80dvh] md:h-[90dvh] min-h-[450px]  w-full z-40 bg-no-repeat bg-cover  px-10 md:px-16 lg:px-24"
       style={{
         backgroundImage: `url(${heroImage})`,
         backgroundPosition: "center",

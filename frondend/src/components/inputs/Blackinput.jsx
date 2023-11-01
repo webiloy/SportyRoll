@@ -13,6 +13,7 @@ export function Blackinput({ title, type, value, setValue }) {
         onChange={(e) => {
           setValue(e.target.value);
         }}
+        required
         className="outline-none rounded-md px-3 text-sm h-10 w-full bg-transparent border border-gray-500"
       ></input>
     </div>

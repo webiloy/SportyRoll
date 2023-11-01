@@ -2,7 +2,7 @@ export function Features() {
   return (
     <div
       // style={{ backgroundImage: `url(${featuresOne})` }}
-      className="flex flex-col bg-gradient-to-tr from-black to-[#151515] md:bg-features-one md:h-[90dvh] w-screen z-40 bg-no-repeat bg-cover overflow-hidden justify-center max-w-[1600px]"
+      className="flex flex-col bg-gradient-to-tr from-black to-[#151515] min-h-[450px] md:bg-features-one md:h-[90dvh] w-screen z-40 bg-no-repeat bg-cover overflow-hidden justify-center "
     >
       <div className="my-4 bg-features-one w-screen h-72 bg-cover"></div>
       <div className="flex flex-col gap-16  px-10 lg:px-24 md:px-16">
