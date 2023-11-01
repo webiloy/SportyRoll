@@ -13,6 +13,9 @@ export default {
       listStyleImage: {
         checkmark: 'url("./src/assets/checkmark.svg")',
       },
+      backgroundImage: {
+        "features-one": 'url("./src/assets/featuresOne.jpg")',
+      },
     },
   },
   plugins: [
