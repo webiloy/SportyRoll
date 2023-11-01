@@ -1,11 +1,12 @@
 import "./App.css";
 import { Navbar } from "./components/Navbar";
+import { Home } from "./pages/home/Home";
 
 function App() {
   return (
     <>
       <Navbar></Navbar>
-      <div className="bg-[url('./assets/Heroimage.png')] h-screen w-screen z-40"></div>
+      <Home></Home>
     </>
   );
 }
