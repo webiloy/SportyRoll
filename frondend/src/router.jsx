@@ -1,41 +1,29 @@
-import { Route, Routes } from "react-router-dom";
-import transition from "./transition";
-import { lazy } from "react";
-import Layout from "./Layout";
+import { Routes, Route } from "react-router-dom";
+import { RouterRender } from "./RoutesConfig/RouterRender";
+import Layout from "./RoutesConfig/Layout";
 import { AnimatePresence } from "framer-motion";
 import { Home } from "./pages/home/Home";
-// LogIn
-// const Login = lazy(() => import("./pages/Login/Login"));
-
+import { Login } from "./pages/UserAuth/login/Login";
+import { Signup } from "./pages/UserAuth/signup/Signup";
+import { NotFoundPage } from "./pages/404/404";
 // Paths
-const routeConfig = [
+const routePaths = [
   {
     path: "/",
     element: <Layout />,
-    children: [{ path: "", element: <Home /> }],
+    children: [
+      { path: "", element: <Home /> },
+      { path: "login", element: <Login /> },
+      { path: "signup", element: <Signup /> },
+      { path: "*", element: <NotFoundPage /> },
+    ],
   },
 ];
 function MainRoutes() {
   return (
     <>
       <AnimatePresence mode="wait">
-        <Routes>
-          {routeConfig.map((route, index) => (
-            <Route key={index} path={route.path} element={route.element}>
-              {route.children &&
-                route.children.map((childRoute, childIndex) => (
-                  <Route
-                    key={childIndex}
-                    path={childRoute.path}
-                    element={transition(
-                      childRoute.element,
-                      `${route.path}+${childIndex}`
-                    )}
-                  />
-                ))}
-            </Route>
-          ))}
-        </Routes>
+        <Routes>{RouterRender(routePaths)}</Routes>
       </AnimatePresence>
     </>
   );
