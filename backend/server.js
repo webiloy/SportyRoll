@@ -19,8 +19,10 @@ app.use(express.json());
 app.use(cookieParser());
 // Styles Folder
 app.use(express.static("public"));
-// index Rotue
+// index Route
 app.use("/", require("./routes/root"));
+// Users Route
+app.use("/users", require("./routes/userRoutes"));
 // 404 Route
 app.all("*", require("./routes/404"));
 

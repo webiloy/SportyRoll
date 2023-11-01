@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const workoutSchema = require("./Workout");
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -13,10 +13,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  workouts: {
-    type: [workoutSchema],
-    default: [],
+  accsess: {
+    type: Boolean,
+    default: false,
   },
+  workouts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Workout",
+    },
+  ],
 });
 
 module.exports = mongoose.model("User", userSchema);

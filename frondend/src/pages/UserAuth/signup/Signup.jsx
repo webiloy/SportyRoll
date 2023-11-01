@@ -3,6 +3,7 @@ import Google from "../../../assets/Icons/Google.svg";
 import { RightArrowSVG } from "../../../components/Icons/RightArrowSVG";
 import Facebook from "../../../assets/Icons/facebook.svg";
 import twitter from "../../../assets/Icons/twitter.svg";
+import { Logo } from "../../../components/Icons/Logo";
 import { Link } from "react-router-dom";
 import { Blackinput } from "../../../components/inputs/Blackinput";
 import { useState } from "react";
@@ -11,11 +12,18 @@ export function Signup() {
   const [password, setPassword] = useState("");
   return (
     <div className="w-full h-[100dvh] min-h-[700px] flex justify-center items-center relative bg-no-repeat bg-center bg-cover background-overlay bg-opacity-20">
-      <div className="sm:w-[480px] w-full sm:h-[650px] h-full bg-black text-white items-center px-10 pt-20 rounded-xl flex flex-col gap-4 child:w-full">
+      <div className="sm:w-[480px] w-full sm:h-[650px] h-full bg-black text-white items-center p-10 rounded-xl flex flex-col gap-4 child:w-full">
+        {/* Logo */}
+        <div className="flex justify-center">
+          <Link to={"/"} className="flex gap-1 items-end justify-center">
+            <Logo className={"w-7 h-7"} fill={"white"}></Logo>
+            <h1 className="text-lg font-bold">Sporty Roll</h1>
+          </Link>
+        </div>
         {/* Header */}
         <div className="flex flex-col gap-1 pb-4">
           <h1 className="font-bold text-2xl">Sign up</h1>
-          <h2 className="text-sm text-gray-300">Register to Ferrisport</h2>
+          <h2 className="text-sm text-gray-300">Register to Sporty Roll</h2>
         </div>
         {/* Inputs */}
         <div className="flex flex-col gap-4 items-center justify-center child:w-full">

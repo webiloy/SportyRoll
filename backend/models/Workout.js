@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const ExerciseSchema = require("./Exercise"); // Update the casing to match the file name
+
 const workoutSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -35,10 +35,12 @@ const workoutSchema = new mongoose.Schema({
     enum: ["private", "public"],
     required: true,
   },
-  Exercises: {
-    type: [ExerciseSchema],
-    default: [],
-  },
+  exercises: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Exercise",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Workout", workoutSchema);
