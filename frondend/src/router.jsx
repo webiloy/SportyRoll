@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes } from "react-router-dom";
 import { RouterRender } from "./RoutesConfig/RouterRender";
 import Layout from "./RoutesConfig/Layout";
 import { AnimatePresence } from "framer-motion";
@@ -13,11 +13,11 @@ const routePaths = [
     element: <Layout />,
     children: [
       { path: "", element: <Home /> },
-      { path: "login", element: <Login /> },
-      { path: "signup", element: <Signup /> },
       { path: "*", element: <NotFoundPage /> },
     ],
   },
+  { path: "signup", element: <Signup /> },
+  { path: "login", element: <Login /> },
 ];
 function MainRoutes() {
   return (

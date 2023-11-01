@@ -2,7 +2,7 @@ import featuresOne from "../../../assets/featuresOne.jpg";
 export function Features() {
   return (
     <div
-      className="flex flex-col bg-black h-screen w-screen z-40 bg-no-repeat bg-cover overflow-hidden justify-center"
+      className="flex flex-col bg-black h-[90dvh] w-screen z-40 bg-no-repeat bg-cover overflow-hidden justify-center"
       style={{ backgroundImage: `url(${featuresOne})` }}
     >
       <div className="flex flex-col gap-16 p-8">

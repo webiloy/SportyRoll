@@ -7,6 +7,8 @@ export default {
         secondary: "#13EA76",
         text: "#161616",
         "secondary-text": "#C9C9C9",
+        NiceGray: "#2E2E2E",
+        NiceBlack: "#0E0E0E",
       },
       listStyleImage: {
         checkmark: 'url("./src/assets/checkmark.svg")',

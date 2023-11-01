@@ -22,7 +22,7 @@ export function Navbar() {
       </div>
 
       <div className="flex gap-12 child:cursor-pointer">
-        <Link to={"register"}>Sign Up</Link>
+        <Link to={"signup"}>Sign Up</Link>
         <GreenLinkBtn path={"login"} text={"Login"}></GreenLinkBtn>
       </div>
     </div>

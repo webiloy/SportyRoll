@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background: #202020;
+}
+
 * {
   font-family: "Roboto", sans-serif;
 }

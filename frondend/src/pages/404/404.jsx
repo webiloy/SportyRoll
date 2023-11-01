@@ -3,7 +3,7 @@ import { GreenLinkBtn } from "../../components/buttons/GreenLinkBtn";
 export function NotFoundPage() {
   // &apos;
   return (
-    <div className="h-[100dvh] min-h-[700px] md:pt-0 pt-40 gap-5 w-full flex justify-center  bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-lime-300/5 via-gray-900/0  items-center flex-col px-2 text-white">
+    <div className="h-[100dvh] min-h-[700px] md:pt-0 pt-40 gap-5 w-full flex justify-center items-center flex-col px-2 text-white">
       <img src={PhoneSVG} alt="" />
       <h1 className="text-4xl font-['Impact']">404: Fitness Not Found</h1>
       <h2 className="text-center ">
