@@ -1,7 +1,7 @@
 import { BsDiscord } from "react-icons/bs";
 export function Cfa() {
   return (
-    <div className="flex flex-col bg-gradient-to-tr from-black to-[#141414] min-h-[450px] p-10">
+    <div className="flex flex-col justify-center bg-gradient-to-tr from-black to-[#141414] min-h-[450px] p-10">
       <h1 className="text-2xl font-bold text-white text-center mb-8">
         Ready to Begin Your Fitness Journey?
       </h1>
