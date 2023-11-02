@@ -1,10 +1,11 @@
 import { HeroSec } from "./components/HeroSec";
 import { Features } from "./components/Features";
 import { Hiw } from "./components/Hiw";
+import { Cfa } from "./components/Cfa";
 export function Home() {
   return (
     <>
-      <HeroSec></HeroSec> <Features></Features> <Hiw></Hiw>
+      <HeroSec></HeroSec> <Features></Features> <Hiw></Hiw> <Cfa></Cfa>
     </>
   );
 }
