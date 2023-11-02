@@ -14,7 +14,9 @@ export default {
         checkmark: 'url("./src/assets/checkmark.svg")',
       },
       backgroundImage: {
-        "features-one": 'url("./src/assets/featuresOne.jpg")',
+        "hero-image": 'url("./src/assets/hero-s.jpg")',
+        "features-one": 'url("./src/assets/library-s.jpg")',
+        "football-team": 'url("./src/assets/football-team-s.jpg")',
       },
     },
   },
