@@ -1,14 +1,6 @@
-import heroImage from "../../../assets/HeroImage.png";
-
 export function HeroSec() {
   return (
-    <div
-      className="flex flex-col bg-black h-[80dvh] md:h-[90dvh] min-h-[450px]  w-full z-40 bg-no-repeat bg-cover  px-10 md:px-16 lg:px-24"
-      style={{
-        backgroundImage: `url(${heroImage})`,
-        backgroundPosition: "center",
-      }}
-    >
+    <div className="flex flex-col bg-black bg-hero-image bg-center h-[80dvh] md:h-[90dvh] min-h-[450px]  w-full z-40 bg-no-repeat bg-cover  px-10 md:px-16 lg:px-24">
       <div className="text-white h-full flex flex-col justify-center items-center md:items-start">
         <h1 className="font-['Impact'] text-white  md:text-6xl text-4xl">
           JUST BE BETTER.
