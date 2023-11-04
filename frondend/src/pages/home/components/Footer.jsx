@@ -2,7 +2,7 @@ export function Footer() {
   return (
     <>
       {/* Contact us section */}
-      <div className="flex justify-between p-6 bg-gradient-to-br from-secondary to-[#13EA4F] items-center">
+      <div className="flex justify-between p-6 bg-gradient-to-br from-secondary to-[#13EA4F] items-center md:px-16">
         <h2 className="text-text text-lg font-semibold ">Have a Question?</h2>
         <button className="rounded-full p-3 px-5 bg-text">
           <span className="bg-gradient-to-r from-secondary to-[#13EA4F] bg-clip-text text-transparent">
@@ -12,7 +12,7 @@ export function Footer() {
       </div>
       {/* Footer */}
 
-      <div className="p-6 bg-[#0A0A0A] text-secondary-text text-xs">
+      <div className="p-6 bg-[#0A0A0A] text-secondary-text text-xs md:px-16">
         <h4 className="text-[#9A9A9A] mt-8">
           © 2023 Ferrisport. All rights resereved
         </h4>

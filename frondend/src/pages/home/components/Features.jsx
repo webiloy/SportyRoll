@@ -2,14 +2,14 @@ import { AiOutlineCheck } from "react-icons/ai";
 export function Features() {
   return (
     <>
-      <div className="flex flex-col bg-gradient-to-t from-black to-[#141414] min-h-[450px] md:bg-features-one md:h-[90dvh] w-screen z-40 bg-no-repeat bg-cover overflow-hidden justify-center">
+      <div className="flex flex-col bg-gradient-to-t from-black to-[#141414] min-h-[450px] md:bg-features-one md:h-[60dvh] w-screen z-40 bg-no-repeat bg-cover overflow-hidden justify-center">
         <div className="mb-4 bg-features-one w-screen h-72 bg-cover bg-center md:hidden"></div>
         <div className="flex flex-col gap-16  px-10 lg:px-24 md:px-16">
-          <div className="relative bottom-20">
-            <h1 className="text-white font-bold text-2xl text-center lg:text-left">
+          <div className="relative bottom-20 md:bottom-0">
+            <h1 className="text-white font-bold text-2xl md:text-3xl max-w-xl text-center md:text-left">
               Extensive Collection of Certified Trainer-Curated Workouts
             </h1>
-            <ul className="text-secondary-text text-sm  flex flex-col gap-6 child:flex child:items-start child:gap-1 my-8">
+            <ul className="text-secondary-text text-sm md:text-lg  flex flex-col gap-6 child:flex child:items-start child:gap-1 md:child:gap-2 my-8 max-w-lg">
               <li>
                 <AiOutlineCheck className="text-xl flex-shrink-0"></AiOutlineCheck>
                 Get fitness plans crafted by experts
@@ -32,14 +32,14 @@ export function Features() {
 
       {/* Second Feature */}
 
-      <div className="flex flex-col bg-gradient-to-br from-black to-[#141414] min-h-[450px] md:bg-features-one md:h-[90dvh] w-screen z-40 bg-no-repeat bg-cover overflow-hidden justify-center ">
+      <div className="flex flex-col bg-gradient-to-br from-black to-[#141414] min-h-[450px] md:bg-football-team-big md:h-[60dvh] w-screen z-40 bg-no-repeat bg-cover bg-center overflow-hidden justify-center ">
         <div className="mb-4 bg-football-team w-screen h-72 bg-cover bg-center md:hidden"></div>
         <div className="flex flex-col gap-16  px-10 lg:px-24 md:px-16">
-          <div className="relative bottom-20">
-            <h1 className="text-white font-bold text-2xl text-center lg:text-left">
+          <div className="relative bottom-20 md:bottom-0">
+            <h1 className="text-white font-bold text-2xl md:text-3xl max-w-xl text-center md:text-left">
               Your Supportive Fitness Community
             </h1>
-            <ul className="text-secondary-text text-sm  flex flex-col gap-6 child:flex child:items-start child:gap-1 mt-8">
+            <ul className="text-secondary-text text-sm md:text-lg flex flex-col gap-6 child:flex child:items-start child:gap-1 md:child:gap-2 mt-8 max-w-lg">
               <li>
                 <AiOutlineCheck className="text-xl flex-shrink-0"></AiOutlineCheck>
                 Join like-minded individuals for support
