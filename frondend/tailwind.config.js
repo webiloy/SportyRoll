@@ -17,6 +17,7 @@ export default {
         "hero-image": 'url("./src/assets/hero-s.jpg")',
         "features-one": 'url("./src/assets/library-s.jpg")',
         "football-team": 'url("./src/assets/football-team-s.jpg")',
+        "football-team-big": 'url("./src/assets/football-team.jpg")',
       },
     },
   },
