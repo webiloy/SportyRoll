@@ -1,7 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
-const Workout = require("../models/Workout");
 // @desc Get all users
 //  @route GET /users
 // @accsess Private
@@ -15,16 +14,18 @@ const getAllUsers = asyncHandler(async (req, res) => {
 // @route POST /users
 // @accsess Private
 const createNewUser = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, accsess } = req.body;
   // Confirm data
   if (!username || !email || !password)
     return res.status(400).json({ message: "All Fields are required" });
   // Chekc for duplicates
   const duplicate = await User.findOne({ username }).lean().exec();
   if (duplicate) return res.status(409).json({ message: "Username Taken" });
+  const emailduplicate = await User.findOne({ email }).lean().exec();
+  if (emailduplicate) return res.status(409).json({ message: "Email Taken" });
   // Hash password
   const hasedPassword = await bcrypt.hash(password, 10);
-  const userObject = { username, email, password: hasedPassword };
+  const userObject = { username, email, password: hasedPassword, accsess };
   // Create and Store User
   const user = await User.create(userObject);
   if (user) res.status(201).json({ message: `New user ${username} created` });
@@ -41,15 +42,15 @@ const updateUser = asyncHandler(async (req, res) => {
     !username ||
     !email ||
     !password ||
-    !accsess ||
+    accsess === null ||
     !Array.isArray(workouts) ||
-    workouts.length
+    workouts?.length === null
   )
     return res.status(400).json({ message: "All fields are required" });
   const user = await User.findById(id).exec();
   if (!user) return res.status(400).json({ message: "User not found" });
   const duplicate = await User.find({ username }).lean().exec();
-  if (duplicate && duplicate?._id.toString() !== id)
+  if (duplicate && duplicate[0]?._id.toString() !== id)
     return res.status(409).json({ message: "Duplicate Username" });
   user.username = username;
   user.email = email;
@@ -63,7 +64,16 @@ const updateUser = asyncHandler(async (req, res) => {
 // @desc delete user
 // @route Patch /users
 // @accsess Private
-const deleteUser = asyncHandler(async (req, res) => {});
+const deleteUser = asyncHandler(async (req, res) => {
+  const { id } = req.body;
+  if (!id) return res.status(400).json({ message: "id is required" });
+  const user = await User.findById(id).exec();
+  if (!user) return res.status(400).json({ message: "user not found" });
+  const result = await user.deleteOne();
+  res.json({
+    message: `The username : ${user.username} with the ID : ${user._id} was deleted`,
+  });
+});
 
 module.exports = {
   getAllUsers,

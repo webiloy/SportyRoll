@@ -23,6 +23,8 @@ app.use(express.static("public"));
 app.use("/", require("./routes/root"));
 // Users Route
 app.use("/users", require("./routes/userRoutes"));
+// Authentication Route
+app.use("/auth", require("./routes/authRoutes"));
 // 404 Route
 app.all("*", require("./routes/404"));
 
