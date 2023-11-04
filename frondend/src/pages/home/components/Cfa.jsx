@@ -1,11 +1,11 @@
 import { BsDiscord } from "react-icons/bs";
 export function Cfa() {
   return (
-    <div className="flex flex-col justify-center bg-gradient-to-tr from-black to-[#141414] min-h-[450px] px-10">
-      <h1 className="text-2xl md:text-3xl font-bold text-white text-center mb-8">
+    <div className="flex flex-col justify-center bg-gradient-to-tr from-black to-[#141414] min-h-[450px] px-10 max-w-[2000px] m-auto">
+      <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white text-center mb-8">
         Ready to Begin Your Fitness Journey?
       </h1>
-      <p className="hidden md:block text-sm text-secondary-text max-w-lg text-center self-center mb-14">
+      <p className="hidden md:block text-sm lg:text-base xl:text-lg text-secondary-text max-w-lg lg:max-w-[42rem] xl:max-w-3xl text-center self-center mb-14">
         Unlock the full potential of your fitness journey. Sign up to access
         personalized workouts and expert guidance. Connect with our community on
         Discord for motivation, support, and expert advice
