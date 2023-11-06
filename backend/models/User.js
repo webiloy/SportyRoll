@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  accsess: {
+  access: {
     type: Boolean,
     default: false,
   },
