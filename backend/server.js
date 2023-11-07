@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const corsOptions = require("./config/corsOptions");
 const errorHandler = require("./middleware/errorHandler");
 const connectDB = require("./config/dbConn");
+const isAllowed = require("./middleware/isAllowed");
 const app = express();
 const PORT = process.env.PORT || 3500;
 
@@ -15,6 +16,8 @@ connectDB();
 app.use(cors(corsOptions));
 // json Accept
 app.use(express.json());
+//
+app.use(isAllowed);
 //
 app.use(cookieParser());
 // Styles Folder
