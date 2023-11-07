@@ -3,7 +3,7 @@ import { Blackinput } from "../../../components/inputs/Blackinput";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import SignupLinks from "./SignupLinks";
-import createAccount from "../../../hooks/createAccount";
+// import createAccount from "../../../hooks/createAccount";
 export function FormSignup() {
   // user Info
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ export function FormSignup() {
     ["Password", password, setPassword, "password"],
   ];
   // hooks
-  const { data, isLoading, isError } = useMutation(createAccount);
+  const { data, isLoading, isError } = useMutation();
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username.length === 0 && !error.includes("Username"))
