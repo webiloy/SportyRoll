@@ -1,4 +1,5 @@
 import { AiOutlinePlus } from "react-icons/ai";
+import { MdKeyboardArrowDown } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 export function Faq() {
@@ -26,7 +27,7 @@ export function Faq() {
     {
       question: "Is there a mobile app for Sporty Roll?",
       answer:
-        "At this time, Sporty Roll is still in development and does not have a dedicated mobile app. However, you can conveniently access and use Sporty Roll on your mobile device by visiting our website. We've designed the site to be mobile-friendly, allowing you to enjoy all the features and benefits of the platform while on the go. Stay tuned for updates on the release of our mobile app as we continue to enhance the user experience.",
+        "At this time, Sporty Roll is still in development and does not have a dedicated mobile app. However, you can conveniently access and use Sporty Roll on your mobile device by visiting our website. ",
     },
   ];
   const [isOpen, setIsOpen] = useState(-1);
@@ -49,23 +50,39 @@ export function Faq() {
                 animate={{ height: answerIsOpen ? "200px" : "75px" }}
                 exit={{ height: "auto" }}
                 transition={{ duration: 0.1 }}
-                onClick={() => setIsOpen(index)}
+                onClick={() => setIsOpen(index === isOpen ? -1 : index)}
               >
-                <div className={`w-full flex justify-between `}>
+                <div
+                  className={`w-full flex justify-between items-center duration-300 ease-in-out ${
+                    !answerIsOpen ? "h-[75px]" : "h-10"
+                  }`}
+                >
                   {info.question}
-                  <AiOutlinePlus className="text-lg lg:text-xl flex-shrink-0"></AiOutlinePlus>
+                  {!answerIsOpen ? (
+                    <AiOutlinePlus
+                      size={30}
+                      className="text-lg lg:text-xl flex-shrink-0"
+                    ></AiOutlinePlus>
+                  ) : (
+                    <MdKeyboardArrowDown
+                      size={30}
+                      className="text-lg lg:text-xl flex-shrink-0"
+                    ></MdKeyboardArrowDown>
+                  )}
                 </div>
-                {answerIsOpen && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-gray-500"
-                  >
-                    {info.answer}
-                  </motion.div>
-                )}
+                <AnimatePresence mode="wait" initial={false}>
+                  {answerIsOpen && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-gray-500 overflow-y-scroll"
+                    >
+                      {info.answer}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.li>
             );
           })}
