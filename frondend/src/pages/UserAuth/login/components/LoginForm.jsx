@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
+import { WebsiteContext } from "../../../../context/WebsiteContext";
 import { Blackinput } from "../../../../components/inputs/Blackinput";
 import { RightArrowSVG } from "../../../../components/Icons/RightArrowSVG";
 import SocialLoginButton from "./SocialLoginButton";
@@ -8,15 +9,18 @@ import Google from "../../../../assets/Icons/Google.svg";
 import { useMutation } from "@tanstack/react-query";
 import LoginAuth from "../../../../hooks/auth/LoginAuth";
 import Seperator from "./Seperator";
+import { getCookie } from "../../../../utils/cookies";
 export default function Loginform() {
+  const { setIsSigned } = useContext(WebsiteContext);
   const userRef = useRef();
   const errRef = useRef();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMesg] = useState("");
-  const { mutate, data, isSuccess, isError, error } = useMutation({
+  const { mutate, data, isSuccess, isError, error, isPending } = useMutation({
     mutationFn: LoginAuth,
   });
+  // submit
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -35,14 +39,24 @@ export default function Loginform() {
     };
     mutate(User);
   };
+  // check Error
   useEffect(() => {
     if (!isError) return;
     const status = error.response?.status;
-    console.log(status);
     if (!status) return setErrMesg("server error");
     if (status === 401) return setErrMesg("Invalid email or password.");
   }, [isError]);
-  if (isSuccess) console.log(data);
+  // Makes the access token a cookie
+  useEffect(() => {
+    if (!isSuccess) return;
+    const expirationDate = new Date();
+    expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000);
+    document.cookie = `access_token=${data.accsessToken}; path=/; expires=${expirationDate}; secure; samesite=none;`;
+    if (getCookie("access_token")) {
+      setIsSigned(true);
+      window.location.href = "/";
+    }
+  }, [isSuccess]);
   return (
     <form className="flex flex-col gap-4">
       {/* Inputs */}
@@ -70,7 +84,7 @@ export default function Loginform() {
         className="text-sm w-full bg-NiceGray h-10 rounded-md font-bold flex items-center justify-center gap-1 group"
         onClick={handleSubmit}
       >
-        <p>Continue with email</p>
+        <p>{isPending ? "Loading..." : "Continue with email"}</p>
         <RightArrowSVG
           fill={"white"}
           className={

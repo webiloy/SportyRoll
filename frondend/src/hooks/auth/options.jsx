@@ -1,6 +1,5 @@
 export function options() {
-  const token = 2;
-
+  const token = document.cookie;
   return {
     method: "GET",
     headers: {
