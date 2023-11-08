@@ -43,53 +43,51 @@ export function Faq() {
         Frequently Asked Questions
       </h1>
       <ul className="text-secondary-text child:m-5 child:lg:mx-0 child:border-b child:border-[#4d4d4d] child:p-2  child:flex  child:lg:border-none lg:child:bg-[#1f1f1f] lg:text-white child:lg:px-10 child:lg:py-5 child:lg:my-2 child:text-lg child:lg:rounded-sm lg:font-medium">
-        <AnimatePresence mode="wait" initial={false}>
-          {Information.map((info, index) => {
-            const answerIsOpen = index === isOpen;
-            return (
-              <motion.li
-                key={index}
-                className="hover:bg-opacity-70 duration-300 ease-in-out cursor-pointer flex flex-col gap-2 overflow-hidden"
-                animate={{ height: answerIsOpen ? "200px" : "75px" }}
-                exit={{ height: "auto" }}
-                transition={{ duration: 0.1 }}
-                onClick={() => setIsOpen(index === isOpen ? -1 : index)}
+        {Information.map((info, index) => {
+          const answerIsOpen = index === isOpen;
+          return (
+            <motion.li
+              key={index}
+              className="hover:bg-opacity-70 duration-300 ease-in-out cursor-pointer flex flex-col gap-2 overflow-hidden"
+              animate={{ height: answerIsOpen ? "200px" : "75px" }}
+              exit={{ height: "auto" }}
+              transition={{ duration: 0.1 }}
+              onClick={() => setIsOpen(index === isOpen ? -1 : index)}
+            >
+              <div
+                className={`w-full flex justify-between items-center duration-300 ease-in-out ${
+                  !answerIsOpen ? "h-[75px]" : "h-10"
+                }`}
               >
-                <div
-                  className={`w-full flex justify-between items-center duration-300 ease-in-out ${
-                    !answerIsOpen ? "h-[75px]" : "h-10"
-                  }`}
-                >
-                  {info.question}
-                  {!answerIsOpen ? (
-                    <AiOutlinePlus
-                      size={30}
-                      className="text-lg lg:text-xl flex-shrink-0"
-                    ></AiOutlinePlus>
-                  ) : (
-                    <MdKeyboardArrowDown
-                      size={30}
-                      className="text-lg lg:text-xl flex-shrink-0"
-                    ></MdKeyboardArrowDown>
-                  )}
-                </div>
-                <AnimatePresence mode="wait" initial={false}>
-                  {answerIsOpen && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="text-gray-500 overflow-y-scroll"
-                    >
-                      {info.answer}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.li>
-            );
-          })}
-        </AnimatePresence>
+                {info.question}
+                {!answerIsOpen ? (
+                  <AiOutlinePlus
+                    size={30}
+                    className="text-lg lg:text-xl flex-shrink-0"
+                  ></AiOutlinePlus>
+                ) : (
+                  <MdKeyboardArrowDown
+                    size={30}
+                    className="text-lg lg:text-xl flex-shrink-0"
+                  ></MdKeyboardArrowDown>
+                )}
+              </div>
+              <AnimatePresence mode="wait" initial={false}>
+                {answerIsOpen && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-gray-500 overflow-y-scroll"
+                  >
+                    {info.answer}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.li>
+          );
+        })}
       </ul>
     </div>
   );
