@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Blackinput } from "../../../../components/inputs/Blackinput";
 import { RightArrowSVG } from "../../../../components/Icons/RightArrowSVG";
+import { useGoogleLogin } from "@react-oauth/google";
 import SocialLoginButton from "./SocialLoginButton";
 import Facebook from "../../../..//assets/Icons/facebook.svg";
 import twitter from "../../../../assets/Icons/twitter.svg";
@@ -42,7 +43,9 @@ export default function Loginform() {
     if (!status) return setErrMesg("server error");
     if (status === 401) return setErrMesg("Invalid email or password.");
   }, [isError]);
-  if (isSuccess) console.log(data);
+  const login = useGoogleLogin({
+    onSuccess: (tokenresponse) => console.log(tokenresponse),
+  });
   return (
     <form className="flex flex-col gap-4">
       {/* Inputs */}
@@ -84,7 +87,7 @@ export default function Loginform() {
       <div className="flex justify-between items-center">
         <SocialLoginButton iconSrc={twitter} />
         <SocialLoginButton iconSrc={Facebook} />
-        <SocialLoginButton iconSrc={Google} />
+        <SocialLoginButton iconSrc={Google} onClick={login} />
       </div>
     </form>
   );
