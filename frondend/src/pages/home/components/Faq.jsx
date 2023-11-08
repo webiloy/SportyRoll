@@ -32,7 +32,10 @@ export function Faq() {
   ];
   const [isOpen, setIsOpen] = useState(-1);
   return (
-    <div className="flex flex-col bg-gradient-to-bl from-black to-[#141414] min-h-[450px] py-10 px-2 md:px-10 lg:px-28 max-w-[2000px] m-auto">
+    <div
+      className="flex flex-col bg-gradient-to-bl from-black to-[#141414] min-h-[450px] py-10 px-2 md:px-10 lg:px-28 max-w-[2000px] m-auto"
+      id="fqa"
+    >
       <h1 className="text-2xl md:text-3xl font-bold text-secondary text-center mb-4 lg:hidden">
         FAQ
       </h1>

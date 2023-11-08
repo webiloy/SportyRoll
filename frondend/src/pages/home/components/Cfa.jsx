@@ -1,4 +1,5 @@
 import { BsDiscord } from "react-icons/bs";
+import { Link } from "react-router-dom";
 export function Cfa() {
   return (
     <div className="flex flex-col justify-center bg-gradient-to-tr from-black to-[#141414] min-h-[450px] px-10 max-w-[2000px] m-auto">
@@ -11,9 +12,12 @@ export function Cfa() {
         Discord for motivation, support, and expert advice
       </p>
       <ul className="flex flex-col md:flex-row gap-4 child:rounded-full text-center font-semibold md:justify-center md:items-center">
-        <li className="bg-secondary text-text py-3 px-10 border-[3px] border-secondary">
+        <Link
+          to={"signup"}
+          className="bg-secondary text-text py-3 px-10 border-[3px] border-secondary hover:text-black hover:bg-white hover:border-gray-500 duration-300 ease-in-out"
+        >
           Sign Up
-        </li>
+        </Link>
         <li className="flex gap-2 justify-center items-center text-secondary border-[3px] border-secondary p-3 md:px-5">
           <BsDiscord className="text-xl"></BsDiscord>Join the Community
         </li>

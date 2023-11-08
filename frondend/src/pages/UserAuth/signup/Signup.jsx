@@ -11,7 +11,7 @@ export function Signup() {
         <div className="flex justify-center">
           <Link to={"/"} className="flex gap-1 items-end justify-center">
             <Logo className={"w-7 h-7"} fill={"white"}></Logo>
-            <h1 className="text-lg font-bold">Sporty Roll</h1>
+            <h1 className="text-lg font-bold">SportyRoll</h1>
           </Link>
         </div>
         {/* Header */}

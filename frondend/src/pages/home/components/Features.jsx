@@ -2,7 +2,10 @@ import { AiOutlineCheck } from "react-icons/ai";
 export function Features() {
   return (
     <>
-      <div className="flex flex-col bg-gradient-to-t from-black to-[#141414] min-h-[450px] md:bg-features-one w-screen bg-no-repeat bg-cover bg-top overflow-hidden justify-center md:aspect-[20/9] max-w-[2000px] m-auto">
+      <div
+        className="flex flex-col bg-gradient-to-t from-black to-[#141414] min-h-[450px] md:bg-features-one w-screen bg-no-repeat bg-cover bg-top overflow-hidden justify-center md:aspect-[20/9] max-w-[2000px] m-auto"
+        id="features"
+      >
         <div className="mb-4 bg-features-one w-screen h-72 bg-cover bg-center md:hidden"></div>
         <div className="flex flex-col gap-16  px-10 md:px-16 lg:px-28">
           <div className="relative bottom-20 md:bottom-0">

@@ -17,10 +17,10 @@ export function Navbar() {
           <Logo fill="white" className="w-10 h-10"></Logo>
         </Link>
         <ul className="flex gap-6 child:cursor-pointer hidden lg:flex">
-          <Link to="Discovery">Discovery</Link>
-          <Link to="Diary">Diary</Link>
-          <Link to="Calculator">Calculator</Link>
-          <Link to="Contact us">Contact us</Link>
+          <Link to="discovery">Discovery</Link>
+          <Link to="diary">Diary</Link>
+          <Link to="calculator">Calculator</Link>
+          <Link to="contact-us">Contact us</Link>
         </ul>
       </div>
       <div className="lg:hidden text-3xl">

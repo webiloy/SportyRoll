@@ -1,6 +1,9 @@
 export function Hiw() {
   return (
-    <div className="flex flex-col bg-gradient-to-tl from-black to-[#141414] min-h-[450px] p-10 py-14 md:p-20 lg:px-28 justify-center max-w-[2000px] m-auto">
+    <div
+      className="flex flex-col bg-gradient-to-tl from-black to-[#141414] min-h-[450px] p-10 py-14 md:p-20 lg:px-28 justify-center max-w-[2000px] m-auto"
+      id="how-it-works"
+    >
       <h1 className="text-2xl md:text-xl lg:text-2xl xl:text-3xl font-bold text-white text-center mb-8 md:mb-5 md:text-secondary-text md:text-start md:font-normal">
         How it Works
       </h1>
