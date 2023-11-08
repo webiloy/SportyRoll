@@ -5,12 +5,12 @@ import { useState } from "react";
 export function Faq() {
   const Information = [
     {
-      question: "How do I get started on Sporty Roll?",
+      question: "How do I get started on SportyRoll?",
       answer:
         "Sign up, explore workouts, share, track progress, engage with community, check FAQs, stay consistent, and review privacy settings to get started on Sporty Roll, your fitness journey companion.",
     },
     {
-      question: "What types of workouts are available on Sporty Roll?",
+      question: "What types of workouts are available on SportyRoll?",
       answer:
         "You'll find various workout types on Sporty Roll, including strength training, cardio, yoga, HIIT, and more. These options cater to diverse fitness preferences and goals, ensuring a comprehensive selection for all users.",
     },
@@ -25,7 +25,7 @@ export function Faq() {
         "Sporty Roll is completely free to use. We believe that access to fitness and a supportive community should be available to everyone. You can sign up, explore workouts, connect with others, and track your fitness progress without any cost. ",
     },
     {
-      question: "Is there a mobile app for Sporty Roll?",
+      question: "Is there a mobile app for SportyRoll?",
       answer:
         "At this time, Sporty Roll is still in development and does not have a dedicated mobile app. However, you can conveniently access and use Sporty Roll on your mobile device by visiting our website. ",
     },
