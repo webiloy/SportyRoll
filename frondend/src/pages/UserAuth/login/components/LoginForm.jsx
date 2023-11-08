@@ -5,11 +5,11 @@ import { RightArrowSVG } from "../../../../components/Icons/RightArrowSVG";
 import SocialLoginButton from "./SocialLoginButton";
 import Facebook from "../../../..//assets/Icons/facebook.svg";
 import twitter from "../../../../assets/Icons/twitter.svg";
-import Google from "../../../../assets/Icons/Google.svg";
 import { useMutation } from "@tanstack/react-query";
 import LoginAuth from "../../../../hooks/auth/LoginAuth";
 import Seperator from "./Seperator";
 import { getCookie } from "../../../../utils/cookies";
+import GoogleLogin from "./GoogleLogin";
 export default function Loginform() {
   const { setIsSigned } = useContext(WebsiteContext);
   const userRef = useRef();
@@ -20,6 +20,7 @@ export default function Loginform() {
   const { mutate, data, isSuccess, isError, error, isPending } = useMutation({
     mutationFn: LoginAuth,
   });
+
   // submit
   useEffect(() => {
     userRef.current.focus();
@@ -101,7 +102,7 @@ export default function Loginform() {
       <div className="flex justify-between items-center">
         <SocialLoginButton iconSrc={twitter} />
         <SocialLoginButton iconSrc={Facebook} />
-        <SocialLoginButton iconSrc={Google} />
+        <GoogleLogin></GoogleLogin>
       </div>
     </form>
   );
