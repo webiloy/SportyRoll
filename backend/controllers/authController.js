@@ -2,13 +2,52 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-
 // @desc Login
 // @route POST /auth
 // @accsess Public
 const login = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password)
+  const { email, password, access_token } = req.body;
+  // Google Login
+  if (access_token) {
+    const response = await fetch(
+      "https://www.googleapis.com/oauth2/v3/userinfo",
+      {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      }
+    );
+    if (response.ok) {
+      const userData = await response.json();
+      const foundUser = await User.findOne({ email: userData.email }).exec();
+      if (!foundUser) return res.status(401).json({ message: "Not Registerd" });
+      const accsessToken = jwt.sign(
+        {
+          UserInfo: {
+            _id: foundUser._id,
+            password: foundUser.username,
+            access: foundUser.access,
+          },
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: "1h" }
+      );
+      const refreshToken = jwt.sign(
+        { username: foundUser.username },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: "7d" }
+      );
+      res.cookie("jwt", refreshToken, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "none",
+        maxAge: 30 * 24 * 60 * 1000, // 30 days
+      });
+      res.json({ accsessToken });
+    } else res.status(response.status).json({ error: "Google Api Error" });
+  }
+  // Normal Login
+  else if (!email || !password)
     res.status(400).json({ message: "All fields are required" });
   const foundUser = await User.findOne({ email }).exec();
   if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
