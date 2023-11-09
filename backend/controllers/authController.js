@@ -20,6 +20,7 @@ const login = asyncHandler(async (req, res) => {
     if (response.ok) {
       const userData = await response.json();
       const foundUser = await User.findOne({ email: userData.email }).exec();
+      console.log(foundUser);
       if (!foundUser) return res.status(401).json({ message: "Not Registerd" });
       const accsessToken = jwt.sign(
         {
@@ -43,7 +44,7 @@ const login = asyncHandler(async (req, res) => {
         sameSite: "none",
         maxAge: 30 * 24 * 60 * 1000, // 30 days
       });
-      res.json({ accsessToken });
+      res.status(202).json({ accsessToken });
     } else res.status(response.status).json({ error: "Google Api Error" });
   }
   // Normal Login
@@ -75,7 +76,7 @@ const login = asyncHandler(async (req, res) => {
     sameSite: "none",
     maxAge: 30 * 24 * 60 * 1000, // 30 days
   });
-  res.json({ accsessToken });
+  res.status(202).json({ accsessToken });
 });
 
 // @desc Refresh
