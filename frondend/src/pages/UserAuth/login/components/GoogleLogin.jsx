@@ -4,7 +4,8 @@ import { WebsiteContext } from "../../../../context/WebsiteContext";
 import Google from "../../../../assets/Icons/Google.svg";
 import SocialLoginButton from "./SocialLoginButton";
 import { getCookie } from "../../../../utils/cookies";
-export default function GoogleLogin() {
+import { setCookie } from "../../../../utils/cookies";
+export default function GoogleLogin({ setErrMesg }) {
   const { setIsSigned } = useContext(WebsiteContext);
   const signIn = useGoogleLogin({
     onSuccess: (credentialResponse) => OnSuccess(credentialResponse),
@@ -22,12 +23,12 @@ export default function GoogleLogin() {
       const data = await response.json();
       const expirationDate = new Date();
       expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000);
-      document.cookie = `access_token=${data.accsessToken}; path=/; expires=${expirationDate}; secure; samesite=none;`;
+      setCookie("access_token", data.accsessToken, { expires: expirationDate });
       if (getCookie("access_token")) {
         setIsSigned(true);
         window.location.href = "/";
-      }
-    }
+      } else setErrMesg("Error Loggin in with Google");
+    } else setErrMesg("Error Loggin in with Google");
   };
   return <SocialLoginButton iconSrc={Google} onClick={signIn} />;
 }

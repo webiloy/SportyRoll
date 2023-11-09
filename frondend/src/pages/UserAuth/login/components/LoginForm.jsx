@@ -9,6 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 import LoginAuth from "../../../../hooks/auth/LoginAuth";
 import Seperator from "./Seperator";
 import { getCookie } from "../../../../utils/cookies";
+import { setCookie } from "../../../../utils/cookies";
 import GoogleLogin from "./GoogleLogin";
 export default function Loginform() {
   const { setIsSigned } = useContext(WebsiteContext);
@@ -53,7 +54,7 @@ export default function Loginform() {
     if (!isSuccess) return;
     const expirationDate = new Date();
     expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000);
-    document.cookie = `access_token=${data.accsessToken}; path=/; expires=${expirationDate}; secure; samesite=none;`;
+    setCookie("access_token", data.accsessToken, { expires: expirationDate });
     if (getCookie("access_token")) {
       setIsSigned(true);
       window.location.href = "/";
@@ -101,7 +102,7 @@ export default function Loginform() {
       <div className="flex justify-between items-center">
         <SocialLoginButton iconSrc={twitter} />
         <SocialLoginButton iconSrc={Facebook} />
-        <GoogleLogin></GoogleLogin>
+        <GoogleLogin setErrMesg={setErrMesg}></GoogleLogin>
       </div>
     </form>
   );
