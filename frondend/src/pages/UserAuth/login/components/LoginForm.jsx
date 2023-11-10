@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState, useContext } from "react";
 import { WebsiteContext } from "../../../../context/WebsiteContext";
 import { Blackinput } from "../../../../components/inputs/Blackinput";
-import { RightArrowSVG } from "../../../../components/Icons/RightArrowSVG";
 import { useMutation } from "@tanstack/react-query";
 import LoginAuth from "../../../../hooks/auth/LoginAuth";
 import Seperator from "./Seperator";
 import { getCookie } from "../../../../utils/cookies";
 import { setCookie } from "../../../../utils/cookies";
 import Socialbtns from "../../components/Socialbtns/Socialbtns";
+import SubmitButton from "./SubmitButton";
 export default function Loginform() {
   const { setIsSigned } = useContext(WebsiteContext);
   const userRef = useRef();
@@ -15,6 +15,7 @@ export default function Loginform() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMesg] = useState("");
+
   const { mutate, data, isSuccess, isError, error, isPending } = useMutation({
     mutationFn: LoginAuth,
   });
@@ -27,14 +28,11 @@ export default function Loginform() {
   }, [email, password]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password.length <= 3)
+    if (password.length <= 5)
       return setErrMesg("Please enter a valid email password.");
     if (!email.endsWith("@gmail.com"))
       return setErrMesg("Please enter a valid email address.");
-    const User = {
-      email: email,
-      password: password,
-    };
+    const User = { email: email, password: password };
     mutate(User);
   };
   // check Error
@@ -80,27 +78,10 @@ export default function Loginform() {
         {errMsg}
       </p>
       {/* Submit */}
-      <button
-        className="text-sm w-full bg-NiceGray h-10 rounded-md font-bold flex items-center justify-center gap-1 group"
-        onClick={handleSubmit}
-        disabled={isPending}
-      >
-        <p>{isPending ? "Loading..." : "Continue with email"}</p>
-        <RightArrowSVG
-          fill={"white"}
-          className={
-            "opacity-0 group-hover:opacity-100 duration-300 ease-in-out"
-          }
-        ></RightArrowSVG>
-      </button>
+      <SubmitButton onClick={handleSubmit} isPending={isPending}></SubmitButton>
       {/* Seperator */}
       <Seperator></Seperator>
       {/* Login Optios */}
-      {/* <div className="flex justify-between items-center">
-        <SocialLoginButton iconSrc={twitter} />
-        <SocialLoginButton iconSrc={Facebook} />
-        <GoogleLogin setErrMesg={setErrMesg}></GoogleLogin>
-      </div> */}
       <Socialbtns setErrMesg={setErrMesg}></Socialbtns>
     </form>
   );
