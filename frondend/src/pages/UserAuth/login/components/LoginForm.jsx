@@ -2,15 +2,12 @@ import { useEffect, useRef, useState, useContext } from "react";
 import { WebsiteContext } from "../../../../context/WebsiteContext";
 import { Blackinput } from "../../../../components/inputs/Blackinput";
 import { RightArrowSVG } from "../../../../components/Icons/RightArrowSVG";
-import SocialLoginButton from "./SocialLoginButton";
-import Facebook from "../../../..//assets/Icons/facebook.svg";
-import twitter from "../../../../assets/Icons/twitter.svg";
 import { useMutation } from "@tanstack/react-query";
 import LoginAuth from "../../../../hooks/auth/LoginAuth";
 import Seperator from "./Seperator";
 import { getCookie } from "../../../../utils/cookies";
 import { setCookie } from "../../../../utils/cookies";
-import GoogleLogin from "./GoogleLogin";
+import Socialbtns from "../../components/Socialbtns/Socialbtns";
 export default function Loginform() {
   const { setIsSigned } = useContext(WebsiteContext);
   const userRef = useRef();
@@ -99,11 +96,12 @@ export default function Loginform() {
       {/* Seperator */}
       <Seperator></Seperator>
       {/* Login Optios */}
-      <div className="flex justify-between items-center">
+      {/* <div className="flex justify-between items-center">
         <SocialLoginButton iconSrc={twitter} />
         <SocialLoginButton iconSrc={Facebook} />
         <GoogleLogin setErrMesg={setErrMesg}></GoogleLogin>
-      </div>
+      </div> */}
+      <Socialbtns setErrMesg={setErrMesg}></Socialbtns>
     </form>
   );
 }

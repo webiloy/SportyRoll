@@ -2,7 +2,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { useContext } from "react";
 import { WebsiteContext } from "../../../../context/WebsiteContext";
 import Google from "../../../../assets/Icons/Google.svg";
-import SocialLoginButton from "./SocialLoginButton";
+import SocialButton from "./SocialButton";
 import { getCookie } from "../../../../utils/cookies";
 import { setCookie } from "../../../../utils/cookies";
 export default function GoogleLogin({ setErrMesg }) {
@@ -11,7 +11,7 @@ export default function GoogleLogin({ setErrMesg }) {
     onSuccess: (credentialResponse) => OnSuccess(credentialResponse),
   });
   const OnSuccess = async (res) => {
-    const response = await fetch("http://localhost:3500/auth", {
+    const response = await fetch("http://localhost:3500/auth/google", {
       credentials: "include",
       method: "POST",
       headers: {
@@ -28,7 +28,10 @@ export default function GoogleLogin({ setErrMesg }) {
         setIsSigned(true);
         window.location.href = "/";
       } else setErrMesg("Error Loggin in with Google");
-    } else setErrMesg("Error Loggin in with Google");
+    } else {
+      setErrMesg("Error Loggin in with Google");
+      console.log(response);
+    }
   };
-  return <SocialLoginButton iconSrc={Google} onClick={signIn} />;
+  return <SocialButton iconSrc={Google} onClick={signIn} />;
 }

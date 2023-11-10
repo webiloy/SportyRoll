@@ -1,13 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Blackinput } from "../../../../components/inputs/Blackinput";
 import { RightArrowSVG } from "../../../../components/Icons/RightArrowSVG";
-import SocialSignupButton from "./SocialSignupButton";
-import Facebook from "../../../..//assets/Icons/facebook.svg";
-import twitter from "../../../../assets/Icons/twitter.svg";
-import Google from "../../../../assets/Icons/Google.svg";
 import { useMutation } from "@tanstack/react-query";
-import LoginAuth from "../../../../hooks/auth/LoginAuth";
+import createAccount from "../../../../hooks/auth/createAccount";
 import Seperator from "./Seperator";
+import Socialbtns from "../../components/Socialbtns/Socialbtns";
 export default function Signupform() {
   const userRef = useRef();
   const errRef = useRef();
@@ -16,7 +13,7 @@ export default function Signupform() {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMesg] = useState("");
   const { mutate, data, isSuccess, isError, error, isPending } = useMutation({
-    mutationFn: LoginAuth,
+    mutationFn: createAccount,
   });
   // submit
   useEffect(() => {
@@ -24,14 +21,17 @@ export default function Signupform() {
   }, []);
   useEffect(() => {
     setErrMesg("");
-  }, [email, password]);
+  }, [email, username, password]);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (username.length <= 3)
+      return setErrMesg("Please enter a valid username.");
     if (password.length <= 3)
-      return setErrMesg("Please enter a valid email password.");
+      return setErrMesg("Please enter a valid password.");
     if (!email.endsWith("@gmail.com"))
       return setErrMesg("Please enter a valid email address.");
     const User = {
+      username: username,
       email: email,
       password: password,
     };
@@ -42,11 +42,12 @@ export default function Signupform() {
     if (!isError) return;
     const status = error.response?.status;
     if (!status) return setErrMesg("server error");
-    if (status === 401) return setErrMesg("Invalid email or password.");
+    if (status === 409) return setErrMesg(error?.response?.data.message);
   }, [isError]);
   // Makes the access token a cookie
   useEffect(() => {
     if (!isSuccess) return;
+    console.log(data);
   }, [isSuccess]);
   return (
     <form className="flex flex-col gap-4">
@@ -92,11 +93,7 @@ export default function Signupform() {
       {/* Seperator */}
       <Seperator></Seperator>
       {/* Login Optios */}
-      <div className="flex justify-between items-center">
-        <SocialSignupButton iconSrc={twitter} />
-        <SocialSignupButton iconSrc={Facebook} />
-        <SocialSignupButton iconSrc={Google} />
-      </div>
+      <Socialbtns setErrMesg={setErrMesg}></Socialbtns>
     </form>
   );
 }

@@ -6,7 +6,41 @@ const jwt = require("jsonwebtoken");
 // @route POST /auth
 // @accsess Public
 const login = asyncHandler(async (req, res) => {
-  const { email, password, access_token } = req.body;
+  const { email, password } = req.body;
+  // Normal Login
+  if (!email || !password)
+    res.status(400).json({ message: "All fields are required" });
+  const foundUser = await User.findOne({ email }).exec();
+  if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
+  const match = await bcrypt.compare(password, foundUser.password);
+  if (!match) return res.status(401).json({ message: "Unauthorized" });
+  const accsessToken = jwt.sign(
+    {
+      UserInfo: {
+        _id: foundUser._id,
+        username: foundUser.username,
+        access: foundUser.access,
+      },
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: "1h" }
+  );
+  const refreshToken = jwt.sign(
+    { username: foundUser.username },
+    process.env.REFRESH_TOKEN_SECRET,
+    { expiresIn: "7d" }
+  );
+  res.cookie("jwt", refreshToken, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "none",
+    maxAge: 30 * 24 * 60 * 1000, // 30 days
+  });
+  res.status(202).json({ accsessToken });
+});
+// Google Login
+const GoogleLogin = asyncHandler(async (req, res) => {
+  const { access_token } = req.body;
   // Google Login
   if (access_token) {
     const response = await fetch(
@@ -19,14 +53,36 @@ const login = asyncHandler(async (req, res) => {
     );
     if (response.ok) {
       const userData = await response.json();
-      const foundUser = await User.findOne({ email: userData.email }).exec();
-      console.log(foundUser);
-      if (!foundUser) return res.status(401).json({ message: "Not Registerd" });
+      let foundUser = await User.findOne({ email: userData.email }).exec();
+      if (!foundUser) {
+        let username = userData.name;
+        const hasedPassword = await bcrypt.hash(
+          process.env.GOOGLE_PASSWORD,
+          10
+        );
+        let duplicate = await User.findOne({ username }).lean().exec();
+        if (duplicate) {
+          let count = 1;
+          while (duplicate) {
+            username = username + `${count}`;
+            duplicate = await User.findOne({ username }).lean().exec();
+            count++;
+          }
+        }
+        const userObject = {
+          username,
+          email: userData.email,
+          password: hasedPassword,
+        };
+        foundUser = await User.create(userObject);
+        if (!foundUser)
+          res.status(400).json({ message: "Invalid user data received" });
+      }
       const accsessToken = jwt.sign(
         {
           UserInfo: {
             _id: foundUser._id,
-            password: foundUser.username,
+            username: foundUser.username,
             access: foundUser.access,
           },
         },
@@ -47,38 +103,7 @@ const login = asyncHandler(async (req, res) => {
       res.status(202).json({ accsessToken });
     } else res.status(response.status).json({ error: "Google Api Error" });
   }
-  // Normal Login
-  else if (!email || !password)
-    res.status(400).json({ message: "All fields are required" });
-  const foundUser = await User.findOne({ email }).exec();
-  if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
-  const match = await bcrypt.compare(password, foundUser.password);
-  if (!match) return res.status(401).json({ message: "Unauthorized" });
-  const accsessToken = jwt.sign(
-    {
-      UserInfo: {
-        _id: foundUser._id,
-        password: foundUser.username,
-        access: foundUser.access,
-      },
-    },
-    process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "1h" }
-  );
-  const refreshToken = jwt.sign(
-    { username: foundUser.username },
-    process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "7d" }
-  );
-  res.cookie("jwt", refreshToken, {
-    httpOnly: true,
-    secure: false,
-    sameSite: "none",
-    maxAge: 30 * 24 * 60 * 1000, // 30 days
-  });
-  res.status(202).json({ accsessToken });
 });
-
 // @desc Refresh
 // @route POST /auth/refresh
 // @accsess Public accsess webtoken expierd
@@ -119,4 +144,4 @@ const logout = asyncHandler(async (req, res) => {
   res.json({ message: "Cookie cleared" });
 });
 
-module.exports = { login, refresh, logout };
+module.exports = { login, GoogleLogin, refresh, logout };
