@@ -9,6 +9,8 @@ import { NotFoundPage } from "./pages/404/404";
 import { useState } from "react";
 import { WebsiteContext } from "./context/WebsiteContext";
 import { getCookie } from "./utils/cookies";
+import { Exercises } from "./pages/Library/Exercises";
+import { Workouts } from "./pages/Library/Workouts";
 function MainRoutes() {
   // is Logged In
   const [isSigned, setIsSigned] = useState(
@@ -23,6 +25,21 @@ function MainRoutes() {
         {
           path: "",
           element: !isSigned ? <Home /> : <h1>Hello</h1>,
+        },
+        { path: "*", element: <NotFoundPage /> },
+      ],
+    },
+    {
+      path: "library",
+      element: <Layout />,
+      children: [
+        {
+          path: "exercises",
+          element: <Exercises />,
+        },
+        {
+          path: "workouts",
+          element: <Workouts />,
         },
         { path: "*", element: <NotFoundPage /> },
       ],
