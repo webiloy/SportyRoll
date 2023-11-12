@@ -18,11 +18,10 @@ export function Navbar() {
   return (
     <>
       <div
-        className={`${NavBackground} ${NavOpacity} duration-300 ease-in-out flex justify-between p-4 lg:p-6 px-8 lg:px-12 fixed z-50 top-0 left-1/2 -translate-x-1/2 w-full  text-white items-center lg:child:items-center h-16 lg:h-[5.5rem] bg-black max-w-[2000px] m-auto`}
+        className={`${NavBackground} ${NavOpacity} duration-300 ease-in-out flex justify-between p-4 lg:p-6 px-8 lg:px-12 fixed z-50 top-0 left-1/2 -translate-x-1/2 w-full  text-white items-center lg:child:items-center h-16 lg:h-[5.5rem] bg-black max-w-[2000px] m-auto `}
       >
         <div className="flex gap-8">
           <Link to={"/"} className="flex items-center justify-center gap-1">
-            {/* <h1 className="font-extrabold text-lg cursor-pointer">Sporty Roll</h1> */}
             <Logo fill="white" className="w-6 h-6 lg:w-8 lg:h-8"></Logo>
           </Link>
           <ul className="gap-6 child:cursor-pointer hidden lg:flex">
@@ -34,7 +33,7 @@ export function Navbar() {
         </div>
         <ul
           className={`${
-            mobileVis ? "h-screen" : "h-0"
+            mobileVis ? "h-[100dvh] overflow-y-scroll" : "h-0"
           }  transition-height duration-500 ease-in-out bg-black flex flex-col px-16 gap-8 w-screen text-xl font-medium overflow-hidden fixed top-0 left-0`}
         >
           <li className="h-[1px] p-4 bg-black"></li>

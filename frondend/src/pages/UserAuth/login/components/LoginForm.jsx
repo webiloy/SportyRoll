@@ -7,7 +7,7 @@ import Seperator from "./Seperator";
 import { getCookie } from "../../../../utils/cookies";
 import { setCookie } from "../../../../utils/cookies";
 import Socialbtns from "../../components/Socialbtns/Socialbtns";
-import SubmitButton from "./SubmitButton";
+import SubmitButton from "../../components/SubmitButton";
 export default function Loginform() {
   const { setIsSigned } = useContext(WebsiteContext);
   const userRef = useRef();
@@ -28,10 +28,10 @@ export default function Loginform() {
   }, [email, password]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password.length <= 5)
-      return setErrMesg("Please enter a valid email password.");
     if (!email.endsWith("@gmail.com"))
       return setErrMesg("Please enter a valid email address.");
+    if (password.length <= 5)
+      return setErrMesg("Please enter a valid password.");
     const User = { email: email, password: password };
     mutate(User);
   };
@@ -78,7 +78,11 @@ export default function Loginform() {
         {errMsg}
       </p>
       {/* Submit */}
-      <SubmitButton onClick={handleSubmit} isPending={isPending}></SubmitButton>
+      <SubmitButton
+        onClick={handleSubmit}
+        isPending={isPending}
+        text={"Continue with email"}
+      ></SubmitButton>
       {/* Seperator */}
       <Seperator></Seperator>
       {/* Login Optios */}

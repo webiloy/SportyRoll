@@ -1,4 +1,5 @@
 import GoogleLogin from "./GoogleLogin";
+import PropTypes from "prop-types";
 import SocialButton from "./SocialButton";
 import twitter from "../../../../assets/Icons/twitter.svg";
 import Facebook from "../../../../assets/Icons/facebook.svg";
@@ -11,3 +12,4 @@ export default function Socialbtns({ setErrMesg }) {
     </div>
   );
 }
+Socialbtns.propTypes = { setErrMesg: PropTypes.func.isRequired };

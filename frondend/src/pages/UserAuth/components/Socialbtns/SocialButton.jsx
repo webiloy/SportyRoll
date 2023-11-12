@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 export default function SocialButton({ iconSrc, onClick }) {
   return (
     <div
@@ -12,3 +13,7 @@ export default function SocialButton({ iconSrc, onClick }) {
     </div>
   );
 }
+SocialButton.propTypes = {
+  iconSrc: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};

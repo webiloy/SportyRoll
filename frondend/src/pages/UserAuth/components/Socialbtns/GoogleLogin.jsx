@@ -1,4 +1,5 @@
 import { useGoogleLogin } from "@react-oauth/google";
+import PropTypes from "prop-types";
 import { useContext } from "react";
 import { WebsiteContext } from "../../../../context/WebsiteContext";
 import Google from "../../../../assets/Icons/Google.svg";
@@ -35,3 +36,4 @@ export default function GoogleLogin({ setErrMesg }) {
   };
   return <SocialButton iconSrc={Google} onClick={signIn} />;
 }
+GoogleLogin.propTypes = { setErrMesg: PropTypes.func.isRequired };

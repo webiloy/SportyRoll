@@ -22,12 +22,15 @@ export function Login() {
         {/* Inputs */}
         <Loginform></Loginform>
         {/* Register */}
-        <div className="flex gap-1 text-sm">
+        <div className="flex gap-1 text-sm group">
           <h1>New to Sporty Roll?</h1>
-          <span className="text-secondary">
-            <Link to={"/signup"} className="flex gap-1 items-center">
+          <span className="text-secondary group-hover:text-green-500">
+            <Link to={"/signup"} className="flex gap-[3px] items-center">
               Get started
-              <RightArrowSVG fill={"#13EA76"} className={""}></RightArrowSVG>
+              <RightArrowSVG
+                fill={"#13EA76"}
+                className={"group-hover:ml-[2px] duration-300 ease-in-out"}
+              ></RightArrowSVG>
             </Link>
           </span>
         </div>

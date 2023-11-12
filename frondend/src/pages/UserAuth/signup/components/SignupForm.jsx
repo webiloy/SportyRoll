@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Blackinput } from "../../../../components/inputs/Blackinput";
-import { RightArrowSVG } from "../../../../components/Icons/RightArrowSVG";
+import PropTypes from "prop-types";
 import { useMutation } from "@tanstack/react-query";
 import createAccount from "../../../../hooks/auth/createAccount";
 import Seperator from "./Seperator";
 import Socialbtns from "../../components/Socialbtns/Socialbtns";
-export default function Signupform() {
+import SubmitButton from "../../components/SubmitButton";
+export default function Signupform({ setIsCreated }) {
   const userRef = useRef();
   const errRef = useRef();
   const [email, setEmail] = useState("");
@@ -24,12 +25,12 @@ export default function Signupform() {
   }, [email, username, password]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (username.length <= 3)
-      return setErrMesg("Please enter a valid username.");
-    if (password.length <= 3)
-      return setErrMesg("Please enter a valid password.");
     if (!email.endsWith("@gmail.com"))
       return setErrMesg("Please enter a valid email address.");
+    if (username.length <= 3)
+      return setErrMesg("Please enter a valid username.");
+    if (password.length <= 5)
+      return setErrMesg("Please enter a valid password.");
     const User = {
       username: username,
       email: email,
@@ -47,7 +48,7 @@ export default function Signupform() {
   // Makes the access token a cookie
   useEffect(() => {
     if (!isSuccess) return;
-    console.log(data);
+    setIsCreated(true);
   }, [isSuccess]);
   return (
     <form className="flex flex-col gap-4">
@@ -78,18 +79,11 @@ export default function Signupform() {
         {errMsg}
       </p>
       {/* Submit */}
-      <button
-        className="text-sm w-full bg-NiceGray h-10 rounded-md font-bold flex items-center justify-center gap-1 group"
+      <SubmitButton
         onClick={handleSubmit}
-      >
-        <p>{isPending ? "Loading..." : "Register with email"}</p>
-        <RightArrowSVG
-          fill={"white"}
-          className={
-            "opacity-0 group-hover:opacity-100 duration-300 ease-in-out"
-          }
-        ></RightArrowSVG>
-      </button>
+        isPending={isPending}
+        text={"Register with email"}
+      ></SubmitButton>
       {/* Seperator */}
       <Seperator></Seperator>
       {/* Login Optios */}
@@ -97,3 +91,4 @@ export default function Signupform() {
     </form>
   );
 }
+Signupform.propTypes = { setIsCreated: PropTypes.func.isRequired };
