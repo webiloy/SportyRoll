@@ -15,5 +15,5 @@ export default function SocialButton({ iconSrc, onClick }) {
 }
 SocialButton.propTypes = {
   iconSrc: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };

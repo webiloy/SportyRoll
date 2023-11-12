@@ -23,15 +23,15 @@ export function Footer() {
         </h4>
         <div className="flex flex-col lg:flex-row justify-between lg:w-1/3">
           <ul className="flex lg:flex-col lg:gap-4 gap-3 flex-wrap child:flex child:gap-3 my-6 border-b pb-6 lg:pb-0  border-[#5e5e5e] lg:child:child:hidden lg:border-none">
-            <a href="#hero-section">
+            <Link to="/#hero-section">
               Home <span>|</span>
-            </a>
-            <a href="#how-it-works">
+            </Link>
+            <Link to={"/#how-it-works"}>
               How it Works <span>|</span>
-            </a>
-            <a href="#fqa">
+            </Link>
+            <Link to="/#fqa">
               FAQ <span>|</span>
-            </a>
+            </Link>
             <Link to={"signup"}>
               Get Started <span>|</span>
             </Link>

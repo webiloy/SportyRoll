@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Navbar } from "../components/Navigation/Navbar";
 import { Suspense } from "react";
+import { Footer } from "../components/Footer/Footer";
 export default function Layout() {
   return (
     <>
@@ -8,6 +9,7 @@ export default function Layout() {
       <Suspense>
         <Outlet></Outlet>
       </Suspense>
+      <Footer></Footer>
     </>
   );
 }

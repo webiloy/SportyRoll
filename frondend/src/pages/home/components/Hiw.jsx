@@ -1,8 +1,17 @@
+import { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 export function Hiw() {
+  const SectionRef = useRef(null);
+  const location = useLocation();
+  useEffect(() => {
+    if (location.hash === "#how-it-works" && SectionRef.current)
+      SectionRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [location]);
   return (
     <div
       className="flex flex-col bg-gradient-to-tl from-black to-[#141414] min-h-[450px] p-10 py-14 md:p-20 lg:px-28 justify-center max-w-[2000px] m-auto"
       id="how-it-works"
+      ref={SectionRef}
     >
       <h1 className="text-2xl md:text-xl lg:text-2xl xl:text-3xl font-bold text-white text-center mb-8 md:mb-5 md:text-secondary-text md:text-start md:font-normal">
         How it Works

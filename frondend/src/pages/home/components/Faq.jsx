@@ -1,33 +1,41 @@
 import { AiOutlinePlus } from "react-icons/ai";
+
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 export function Faq() {
+  const faqSectionRef = useRef(null);
+  const location = useLocation();
+  useEffect(() => {
+    if (location.hash === "#fqa" && faqSectionRef.current)
+      faqSectionRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [location]);
   const Information = [
     {
       question: "How do I get started on SportyRoll?",
       answer:
-        "Sign up, explore workouts, share, track progress, engage with community, check FAQs, stay consistent, and review privacy settings to get started on Sporty Roll, your fitness journey companion.",
+        "Sign up, explore workouts, share, track progress, engage with community, check FAQs, stay consistent, and review privacy settings to get started on SportyRoll, your fitness journey companion.",
     },
     {
       question: "What types of workouts are available on SportyRoll?",
       answer:
-        "You'll find various workout types on Sporty Roll, including strength training, cardio, yoga, HIIT, and more. These options cater to diverse fitness preferences and goals, ensuring a comprehensive selection for all users.",
+        "You'll find various workout types on SportyRoll, including strength training, cardio, yoga, HIIT, and more. These options cater to diverse fitness preferences and goals, ensuring a comprehensive selection for all users.",
     },
     {
       question: "Are the workout plans suitable for beginners?",
       answer:
-        "Certainly, Sporty Roll provides a range of workout plans specifically designed to accommodate beginners. These plans feature exercises and routines that are easy to follow, gradually increasing in intensity as users progress.",
+        "Certainly, SportyRoll provides a range of workout plans specifically designed to accommodate beginners. These plans feature exercises and routines that are easy to follow, gradually increasing in intensity as users progress.",
     },
     {
-      question: "Is Sporty Roll free to use?",
+      question: "Is SportyRoll free to use?",
       answer:
-        "Sporty Roll is completely free to use. We believe that access to fitness and a supportive community should be available to everyone. You can sign up, explore workouts, connect with others, and track your fitness progress without any cost. ",
+        "SportyRoll is completely free to use. We believe that access to fitness and a supportive community should be available to everyone. You can sign up, explore workouts, connect with others, and track your fitness progress without any cost. ",
     },
     {
       question: "Is there a mobile app for SportyRoll?",
       answer:
-        "At this time, Sporty Roll is still in development and does not have a dedicated mobile app. However, you can conveniently access and use Sporty Roll on your mobile device by visiting our website. ",
+        "At this time, SportyRoll is still in development and does not have a dedicated mobile app. However, you can conveniently access and use SportyRoll on your mobile device by visiting our website. ",
     },
   ];
   const [isOpen, setIsOpen] = useState(-1);
@@ -35,6 +43,7 @@ export function Faq() {
     <div
       className="flex flex-col bg-gradient-to-bl from-black to-[#141414] min-h-[450px] py-10 px-2 md:px-10 lg:px-28 max-w-[2000px] m-auto"
       id="fqa"
+      ref={faqSectionRef}
     >
       <h1 className="text-2xl md:text-3xl font-bold text-secondary text-center mb-4 lg:hidden">
         FAQ

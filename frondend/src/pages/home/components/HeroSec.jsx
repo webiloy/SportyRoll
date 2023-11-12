@@ -1,9 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useRef } from "react";
 export function HeroSec() {
+  const SectionRef = useRef(null);
+  const location = useLocation();
+  useEffect(() => {
+    if (location.hash === "#hero-section" && SectionRef.current)
+      SectionRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [location]);
   return (
     <div
       className="flex flex-col bg-black bg-hero-image bg-center aspect-[9/16] md:aspect-square lg:aspect-[2/1]  sm:min-h-[450px] max-h-[450px] md:max-h-max  w-full z-40 bg-no-repeat bg-cover max-w-[2000px] m-auto"
       id="hero-section"
+      ref={SectionRef}
     >
       <div className="text-white h-full flex flex-col justify-center items-center max-w-[1600px] self-center w-full">
         <h1 className="font-['Impact'] text-white text-4xl md:text-6xl lg:text-7xl xl:text-8xl">

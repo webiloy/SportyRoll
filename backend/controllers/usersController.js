@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 // @desc Get all users
 //  @route GET /users
@@ -14,7 +15,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 // @route POST /users
 // @accsess Private
 const createNewUser = asyncHandler(async (req, res) => {
-  const { username, email, password, accsess } = req.body;
+  const { username, email, password, accsess, giveCookie } = req.body;
   console.log(username);
   // Confirm data
   if (!username || !email || !password)
@@ -29,10 +30,34 @@ const createNewUser = asyncHandler(async (req, res) => {
   const userObject = { username, email, password: hasedPassword, accsess };
   // Create and Store User
   const user = await User.create(userObject);
-  if (user) res.status(201).json({ message: `New user ${username} created` });
-  else res.status(400).json({ message: "Invalid user data received" });
+  if (user && giveCookie) {
+    const accsessToken = jwt.sign(
+      {
+        UserInfo: {
+          _id: user._id,
+          username: user.username,
+          access: user.access,
+        },
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "1h" }
+    );
+    const refreshToken = jwt.sign(
+      { username: user.username },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: "7d" }
+    );
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "none",
+      maxAge: 30 * 24 * 60 * 1000, // 30 days
+    });
+    return res.status(202).json({ accsessToken });
+  } else if (user)
+    return res.status(202).json({ message: `User ${user.username} Created!` });
+  else return res.status(400).json({ message: "Invalid user data received" });
 });
-
 // @desc Update user
 // @route Patch /users
 // @accsess Private

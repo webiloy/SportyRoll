@@ -1,12 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useContext, useRef, useState } from "react";
+import { WebsiteContext } from "../../../../context/WebsiteContext";
 import { Blackinput } from "../../../../components/inputs/Blackinput";
-import PropTypes from "prop-types";
 import { useMutation } from "@tanstack/react-query";
 import createAccount from "../../../../hooks/auth/createAccount";
 import Seperator from "./Seperator";
+import { getCookie } from "../../../../utils/cookies";
+import { setCookie } from "../../../../utils/cookies";
 import Socialbtns from "../../components/Socialbtns/Socialbtns";
 import SubmitButton from "../../components/SubmitButton";
-export default function Signupform({ setIsCreated }) {
+export default function Signupform() {
+  const { setIsSigned } = useContext(WebsiteContext);
   const userRef = useRef();
   const errRef = useRef();
   const [email, setEmail] = useState("");
@@ -35,6 +38,7 @@ export default function Signupform({ setIsCreated }) {
       username: username,
       email: email,
       password: password,
+      giveCookie: true,
     };
     mutate(User);
   };
@@ -48,7 +52,13 @@ export default function Signupform({ setIsCreated }) {
   // Makes the access token a cookie
   useEffect(() => {
     if (!isSuccess) return;
-    setIsCreated(true);
+    const expirationDate = new Date();
+    expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000);
+    setCookie("access_token", data.accsessToken, { expires: expirationDate });
+    if (getCookie("access_token")) {
+      setIsSigned(true);
+      window.location.href = "/";
+    }
   }, [isSuccess]);
   return (
     <form className="flex flex-col gap-4">
@@ -91,4 +101,3 @@ export default function Signupform({ setIsCreated }) {
     </form>
   );
 }
-Signupform.propTypes = { setIsCreated: PropTypes.func.isRequired };

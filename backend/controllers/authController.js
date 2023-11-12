@@ -36,7 +36,7 @@ const login = asyncHandler(async (req, res) => {
     sameSite: "none",
     maxAge: 30 * 24 * 60 * 1000, // 30 days
   });
-  res.status(202).json({ accsessToken });
+  return res.status(202).json({ accsessToken });
 });
 // Google Login
 const GoogleLogin = asyncHandler(async (req, res) => {

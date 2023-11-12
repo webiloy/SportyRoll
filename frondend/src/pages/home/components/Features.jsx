@@ -1,10 +1,19 @@
 import { AiOutlineCheck } from "react-icons/ai";
+import { useLocation } from "react-router-dom";
+import { useEffect, useRef } from "react";
 export function Features() {
+  const SectionRef = useRef(null);
+  const location = useLocation();
+  useEffect(() => {
+    if (location.hash === "#features" && SectionRef.current)
+      SectionRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [location]);
   return (
     <>
       <div
         className="flex flex-col bg-gradient-to-t from-black to-[#141414] min-h-[450px] md:bg-features-one w-screen bg-no-repeat bg-cover bg-top overflow-hidden justify-center md:aspect-[20/9] max-w-[2000px] m-auto"
         id="features"
+        ref={SectionRef}
       >
         <div className="mb-4 bg-features-one w-screen h-72 bg-cover bg-center md:hidden"></div>
         <div className="flex flex-col gap-16  px-10 md:px-16 lg:px-28">
