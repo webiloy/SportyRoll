@@ -7,7 +7,7 @@ export default function Socialbtns({ setErrMesg }) {
   return (
     <div className="flex justify-between items-center">
       <SocialButton iconSrc={twitter} />
-      <Facebooklogin></Facebooklogin>
+      <Facebooklogin setErrMesg={setErrMesg}></Facebooklogin>
       <GoogleLogin setErrMesg={setErrMesg}></GoogleLogin>
     </div>
   );

@@ -52,58 +52,109 @@ const GoogleLogin = asyncHandler(async (req, res) => {
         },
       }
     );
-    if (response.ok) {
-      const userData = await response.json();
-      let foundUser = await User.findOne({ email: userData.email }).exec();
-      if (!foundUser) {
-        let username = userData.name;
-        const hasedPassword = await bcrypt.hash(
-          process.env.GOOGLE_PASSWORD,
-          10
-        );
-        let duplicate = await User.findOne({ username }).lean().exec();
-        if (duplicate) {
-          let count = 1;
-          while (duplicate) {
-            username = username + `${count}`;
-            duplicate = await User.findOne({ username }).lean().exec();
-            count++;
-          }
+    if (!response.ok)
+      return res.status(response.status).json({ error: "Google Api Error" });
+    const userData = await response.json();
+    let foundUser = await User.findOne({ email: userData.email }).exec();
+    if (!foundUser) {
+      let username = userData.name;
+      const hasedPassword = await bcrypt.hash(process.env.SOCIAL_PASSWORD, 10);
+      let duplicate = await User.findOne({ username }).lean().exec();
+      if (duplicate) {
+        let count = 1;
+        while (duplicate) {
+          username = username + `${count}`;
+          duplicate = await User.findOne({ username }).lean().exec();
+          count++;
         }
-        const userObject = {
-          username,
-          email: userData.email,
-          password: hasedPassword,
-        };
-        foundUser = await User.create(userObject);
-        if (!foundUser)
-          res.status(400).json({ message: "Invalid user data received" });
       }
-      const accsessToken = jwt.sign(
-        {
-          UserInfo: {
-            _id: foundUser._id,
-            username: foundUser.username,
-            access: foundUser.access,
-          },
+      const userObject = {
+        username,
+        email: userData.email,
+        password: hasedPassword,
+      };
+      foundUser = await User.create(userObject);
+      if (!foundUser)
+        res.status(400).json({ message: "Invalid user data received" });
+    }
+    const accsessToken = jwt.sign(
+      {
+        UserInfo: {
+          _id: foundUser._id,
+          username: foundUser.username,
+          access: foundUser.access,
         },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "1h" }
-      );
-      const refreshToken = jwt.sign(
-        { username: foundUser.username },
-        process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: "7d" }
-      );
-      res.cookie("jwt", refreshToken, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "none",
-        maxAge: 30 * 24 * 60 * 1000, // 30 days
-      });
-      res.status(202).json({ accsessToken });
-    } else res.status(response.status).json({ error: "Google Api Error" });
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "1h" }
+    );
+    const refreshToken = jwt.sign(
+      { username: foundUser.username },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: "7d" }
+    );
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "none",
+      maxAge: 30 * 24 * 60 * 1000, // 30 days
+    });
+    res.status(202).json({ accsessToken });
   }
+});
+const FacebookLogin = asyncHandler(async (req, res) => {
+  const { data } = req.body;
+  if (!data || !data?.name || !data?.id || !data?.email)
+    return res.status(400).json({ message: "Facebook user data is required" });
+  let foundUser = await User.findOne({ email: data.email }).exec();
+  if (!foundUser) {
+    let username = data.name;
+    if (!/^[a-zA-Z]+$/.test(username)) {
+      var atIndex = data.email.indexOf("@");
+      username = data.email.substring(0, atIndex);
+    }
+    const hasedPassword = await bcrypt.hash(data.id, 10);
+    let duplicate = await User.findOne({ username }).lean().exec();
+    if (duplicate) {
+      let count = 1;
+      while (duplicate) {
+        username = username + `${count}`;
+        duplicate = await User.findOne({ username }).lean().exec();
+        count++;
+      }
+    }
+    const userObject = {
+      username,
+      email: data.email,
+      password: hasedPassword,
+    };
+    foundUser = await User.create(userObject);
+    if (!foundUser)
+      res.status(400).json({ message: "Invalid user data received" });
+  }
+  const accsessToken = jwt.sign(
+    {
+      UserInfo: {
+        _id: foundUser._id,
+        username: foundUser.username,
+        access: foundUser.access,
+      },
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: "1h" }
+  );
+  const refreshToken = jwt.sign(
+    { username: foundUser.username },
+    process.env.REFRESH_TOKEN_SECRET,
+    { expiresIn: "7d" }
+  );
+  res.cookie("jwt", refreshToken, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "none",
+    maxAge: 30 * 24 * 60 * 1000, // 30 days
+  });
+  return res.status(202).json({ accsessToken });
 });
 // @desc Refresh
 // @route POST /auth/refresh
@@ -134,7 +185,6 @@ const refresh = asyncHandler(async (req, res) => {
     })
   );
 });
-
 // @desc Logout
 // @route POST /auth/logout
 // @accsess Public - clears cookie if exists
@@ -145,4 +195,4 @@ const logout = asyncHandler(async (req, res) => {
   res.json({ message: "Cookie cleared" });
 });
 
-module.exports = { login, GoogleLogin, refresh, logout };
+module.exports = { login, GoogleLogin, FacebookLogin, refresh, logout };

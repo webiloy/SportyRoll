@@ -6,6 +6,8 @@ const loginLimiter = require("../middleware/loginLimiter");
 router.route("/").post(loginLimiter, authController.login);
 // Google Auth
 router.route("/google").post(loginLimiter, authController.GoogleLogin);
+// Facebook Auth
+router.route("/facebook").post(loginLimiter, authController.FacebookLogin);
 // Refresh Access Token
 router.route("/refresh").get(authController.refresh);
 // Logout Cookies
