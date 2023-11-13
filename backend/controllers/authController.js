@@ -38,7 +38,8 @@ const login = asyncHandler(async (req, res) => {
   });
   return res.status(202).json({ accsessToken });
 });
-// Google Login
+// @desc Google Login
+// @route POST /auth/google
 const GoogleLogin = asyncHandler(async (req, res) => {
   const { access_token } = req.body;
   // Google Login

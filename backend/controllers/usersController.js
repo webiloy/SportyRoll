@@ -10,13 +10,11 @@ const getAllUsers = asyncHandler(async (req, res) => {
   if (!users) return res.status(400).json({ message: "No Users Found" });
   else res.json({ users: users });
 });
-
 // @desc Create new user
 // @route POST /users
 // @accsess Private
 const createNewUser = asyncHandler(async (req, res) => {
   const { username, email, password, accsess, giveCookie } = req.body;
-  console.log(username);
   // Confirm data
   if (!username || !email || !password)
     return res.status(400).json({ message: "All Fields are required" });
@@ -30,6 +28,7 @@ const createNewUser = asyncHandler(async (req, res) => {
   const userObject = { username, email, password: hasedPassword, accsess };
   // Create and Store User
   const user = await User.create(userObject);
+  // gives back cookie
   if (user && giveCookie) {
     const accsessToken = jwt.sign(
       {
