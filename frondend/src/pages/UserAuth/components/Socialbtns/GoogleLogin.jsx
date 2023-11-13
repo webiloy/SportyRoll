@@ -24,7 +24,7 @@ export default function GoogleLogin({ setErrMesg }) {
       const data = await response.json();
       const expirationDate = new Date();
       expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000);
-      setCookie("access_token", data.accsessToken, { expires: expirationDate });
+      setCookie("access_token", data.accessToken, { expires: expirationDate });
       if (getCookie("access_token")) {
         setIsSigned(true);
         window.location.href = "/";

@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const authHelpers = require("../utils/auth/authHelpers");
 // @desc Login
 // @route POST /auth
 // @accsess Public
@@ -14,28 +15,7 @@ const login = asyncHandler(async (req, res) => {
   if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
   const match = await bcrypt.compare(password, foundUser.password);
   if (!match) return res.status(401).json({ message: "Unauthorized" });
-  const accsessToken = jwt.sign(
-    {
-      UserInfo: {
-        _id: foundUser._id,
-        username: foundUser.username,
-        access: foundUser.access,
-      },
-    },
-    process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "1h" }
-  );
-  const refreshToken = jwt.sign(
-    { username: foundUser.username },
-    process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "7d" }
-  );
-  res.cookie("jwt", refreshToken, {
-    httpOnly: true,
-    secure: false,
-    sameSite: "none",
-    maxAge: 30 * 24 * 60 * 1000, // 30 days
-  });
+  const accsessToken = authHelpers.generateTokensAndSetCookie(res, foundUser);
   return res.status(202).json({ accsessToken });
 });
 // @desc Google Login
@@ -46,28 +26,15 @@ const GoogleLogin = asyncHandler(async (req, res) => {
   if (access_token) {
     const response = await fetch(
       "https://www.googleapis.com/oauth2/v3/userinfo",
-      {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      }
+      { headers: { Authorization: `Bearer ${access_token}` } }
     );
     if (!response.ok)
       return res.status(response.status).json({ error: "Google Api Error" });
     const userData = await response.json();
     let foundUser = await User.findOne({ email: userData.email }).exec();
     if (!foundUser) {
-      let username = userData.name;
+      let username = await authHelpers.getValidUsername(userData.name);
       const hasedPassword = await bcrypt.hash(process.env.SOCIAL_PASSWORD, 10);
-      let duplicate = await User.findOne({ username }).lean().exec();
-      if (duplicate) {
-        let count = 1;
-        while (duplicate) {
-          username = username + `${count}`;
-          duplicate = await User.findOne({ username }).lean().exec();
-          count++;
-        }
-      }
       const userObject = {
         username,
         email: userData.email,
@@ -77,29 +44,8 @@ const GoogleLogin = asyncHandler(async (req, res) => {
       if (!foundUser)
         res.status(400).json({ message: "Invalid user data received" });
     }
-    const accsessToken = jwt.sign(
-      {
-        UserInfo: {
-          _id: foundUser._id,
-          username: foundUser.username,
-          access: foundUser.access,
-        },
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1h" }
-    );
-    const refreshToken = jwt.sign(
-      { username: foundUser.username },
-      process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "7d" }
-    );
-    res.cookie("jwt", refreshToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "none",
-      maxAge: 30 * 24 * 60 * 1000, // 30 days
-    });
-    res.status(202).json({ accsessToken });
+    const accessToken = authHelpers.generateTokensAndSetCookie(res, foundUser);
+    res.status(202).json({ accessToken });
   }
 });
 const FacebookLogin = asyncHandler(async (req, res) => {
@@ -108,21 +54,8 @@ const FacebookLogin = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Facebook user data is required" });
   let foundUser = await User.findOne({ email: data.email }).exec();
   if (!foundUser) {
-    let username = data.name;
-    if (!/^[a-zA-Z]+$/.test(username)) {
-      var atIndex = data.email.indexOf("@");
-      username = data.email.substring(0, atIndex);
-    }
+    let username = await authHelpers.getValidUsername(data.name, data.email);
     const hasedPassword = await bcrypt.hash(data.id, 10);
-    let duplicate = await User.findOne({ username }).lean().exec();
-    if (duplicate) {
-      let count = 1;
-      while (duplicate) {
-        username = username + `${count}`;
-        duplicate = await User.findOne({ username }).lean().exec();
-        count++;
-      }
-    }
     const userObject = {
       username,
       email: data.email,
@@ -132,29 +65,8 @@ const FacebookLogin = asyncHandler(async (req, res) => {
     if (!foundUser)
       res.status(400).json({ message: "Invalid user data received" });
   }
-  const accsessToken = jwt.sign(
-    {
-      UserInfo: {
-        _id: foundUser._id,
-        username: foundUser.username,
-        access: foundUser.access,
-      },
-    },
-    process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "1h" }
-  );
-  const refreshToken = jwt.sign(
-    { username: foundUser.username },
-    process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "7d" }
-  );
-  res.cookie("jwt", refreshToken, {
-    httpOnly: true,
-    secure: false,
-    sameSite: "none",
-    maxAge: 30 * 24 * 60 * 1000, // 30 days
-  });
-  return res.status(202).json({ accsessToken });
+  const accessToken = authHelpers.generateTokensAndSetCookie(res, foundUser);
+  return res.status(202).json({ accessToken });
 });
 // @desc Refresh
 // @route POST /auth/refresh
