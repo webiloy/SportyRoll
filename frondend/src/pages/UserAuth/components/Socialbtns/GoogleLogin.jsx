@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { useContext } from "react";
 import { WebsiteContext } from "../../../../context/WebsiteContext";
 import Google from "../../../../assets/Icons/Google.svg";
-import SocialButton from "./SocialButton";
 import { getCookie } from "../../../../utils/cookies";
 import { setCookie } from "../../../../utils/cookies";
 export default function GoogleLogin({ setErrMesg }) {
@@ -31,9 +30,19 @@ export default function GoogleLogin({ setErrMesg }) {
       } else setErrMesg("Error Loggin in with Google");
     } else {
       setErrMesg("Error Loggin in with Google");
-      console.log(response);
     }
   };
-  return <SocialButton iconSrc={Google} onClick={signIn} />;
+  return (
+    <div
+      className="group relative h-14 w-[40%] cursor-pointer hover:bg-opacity-80 duration-300 ease-in-out rounded-lg bg-NiceBlack flex items-center justify-center"
+      onClick={signIn}
+    >
+      <img
+        src={Google}
+        alt=""
+        className="duration-300 ease-in-out group-hover:scale-95"
+      />
+    </div>
+  );
 }
 GoogleLogin.propTypes = { setErrMesg: PropTypes.func.isRequired };

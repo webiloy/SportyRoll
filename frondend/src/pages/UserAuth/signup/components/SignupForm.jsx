@@ -3,7 +3,7 @@ import { WebsiteContext } from "../../../../context/WebsiteContext";
 import { Blackinput } from "../../../../components/inputs/Blackinput";
 import { useMutation } from "@tanstack/react-query";
 import createAccount from "../../../../hooks/auth/createAccount";
-import Seperator from "./Seperator";
+import Seperator from "../../components/Seperator";
 import { getCookie } from "../../../../utils/cookies";
 import { setCookie } from "../../../../utils/cookies";
 import Socialbtns from "../../components/Socialbtns/Socialbtns";

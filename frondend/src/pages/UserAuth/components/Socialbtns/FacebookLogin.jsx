@@ -33,7 +33,7 @@ export default function Facebooklogin({ setErrMesg }) {
   return (
     <FacebookLogin
       appId={import.meta.env.VITE_FACEBOOK_APP_ID}
-      className="group relative h-14 w-[30%] cursor-pointer hover:bg-opacity-80 duration-300 ease-in-out rounded-lg bg-NiceBlack flex items-center justify-center"
+      className="group relative h-14 w-[40%] cursor-pointer hover:bg-opacity-80 duration-300 ease-in-out rounded-lg bg-NiceBlack flex items-center justify-center"
       onSuccess={(response) => {
         onSuccess(response);
       }}
