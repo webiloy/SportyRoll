@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
-export default function SocialButton({ iconSrc, onClick }) {
+export default function SocialButton({ iconSrc, onClick, className }) {
   return (
     <div
-      className="group relative h-14 w-[30%] cursor-pointer hover:bg-opacity-80 duration-300 ease-in-out rounded-lg bg-NiceBlack flex items-center justify-center"
+      className={`${className} group relative h-14 w-[30%] cursor-pointer hover:bg-opacity-80 duration-300 ease-in-out rounded-lg bg-NiceBlack flex items-center justify-center`}
       onClick={onClick}
     >
       <img
