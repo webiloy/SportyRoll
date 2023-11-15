@@ -7,6 +7,7 @@ function generateTokensAndSetCookie(res, user) {
     {
       UserInfo: {
         _id: user._id,
+        email: user.email,
         username: user.username,
         access: user.access,
       },

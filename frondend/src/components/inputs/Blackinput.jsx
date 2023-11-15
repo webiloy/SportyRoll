@@ -2,9 +2,9 @@ import PropTypes from "prop-types";
 import { forwardRef } from "react";
 
 export const Blackinput = forwardRef(
-  ({ title, type, value, setValue }, ref) => {
+  ({ title, type, value, setValue, className }, ref) => {
     return (
-      <div className="flex flex-col gap-1">
+      <div className={`flex flex-col gap-1 ${className}`}>
         <label htmlFor="email" className="text-sm text-gray-300 cursor-pointer">
           {title}
         </label>
@@ -31,4 +31,5 @@ Blackinput.propTypes = {
   type: PropTypes.string,
   value: PropTypes.string,
   setValue: PropTypes.func.isRequired,
+  className: PropTypes.string,
 };

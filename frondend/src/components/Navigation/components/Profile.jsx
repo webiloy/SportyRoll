@@ -41,7 +41,7 @@ export default function Profile() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute right-0 top-[120%] w-48 h-24 bg-gradient-to-bl from-neutral-900 to-text rounded-lg flex flex-col justify-around px-2 text-gray-400"
+            className="absolute right-0 top-[120%] w-48 h-24 bg-gradient-to-bl from-neutral-900 to-text rounded-lg flex flex-col justify-around px-2 text-gray-400 shadow-xl shadow-black"
           >
             <Link
               to={"/user/profile"}
