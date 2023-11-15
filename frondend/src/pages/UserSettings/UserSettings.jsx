@@ -11,8 +11,8 @@ export default function UserSettings({ page }) {
     window.history.pushState(null, "", info);
   };
   return (
-    <div className="min-h-[450px] my-28 sm:px-12 max-w-[2000px] m-auto text-gray-400 flex gap-4">
-      <div className="flex flex-col w-72 h-full gap-1 child-hover:bg-zinc-800 child:gap-2 w-1/4">
+    <div className="min-h-[450px] my-28 sm:px-12 px-4 max-w-[2000px] m-auto text-gray-400 flex gap-4 sm:flex-row flex-col">
+      <div className="flex flex-col  h-full gap-1 child-hover:bg-zinc-800 child:gap-2 sm:w-1/4 w-full">
         <button
           className={`${
             section === "profile" && "bg-text"
@@ -32,7 +32,7 @@ export default function UserSettings({ page }) {
           <p>Password</p>
         </button>
       </div>
-      <div className="w-[80%] border-NiceGray border-2 rounded-lg">
+      <div className="sm:w-[80%] w-full border-NiceGray border-2 rounded-lg">
         {LoadSection}
       </div>
     </div>
