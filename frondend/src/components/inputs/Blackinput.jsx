@@ -1,17 +1,19 @@
 import PropTypes from "prop-types";
 import { forwardRef } from "react";
-
 export const Blackinput = forwardRef(
   ({ title, type, value, setValue, className }, ref) => {
     return (
       <div className={`flex flex-col gap-1 ${className}`}>
-        <label htmlFor="email" className="text-sm text-gray-300 cursor-pointer">
+        <label
+          htmlFor={title}
+          className="text-sm text-gray-300 cursor-pointer w-fit"
+        >
           {title}
         </label>
         <input
           type={type}
-          name="email"
-          id="email"
+          name={title}
+          id={title}
           autoComplete="off"
           value={value}
           ref={ref}

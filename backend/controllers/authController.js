@@ -105,7 +105,7 @@ const logout = asyncHandler(async (req, res) => {
   const cookies = req.cookies;
   if (!cookies.jwt) return res.sendStatus(204);
   res.clearCookie("jwt", { httpOnly: true, sameSite: "none", secure: true });
-  res.json({ message: "Cookie cleared" });
+  res.status(202).json({ message: "Cookie cleared" });
 });
 
 module.exports = { login, GoogleLogin, FacebookLogin, refresh, logout };

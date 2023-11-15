@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Logout from "../../../assets/Icons/Logout.svg";
 import Settings from "../../../assets/Icons/Settings.svg";
 import { Link } from "react-router-dom";
+import { deleteCookie, getCookie } from "../../../utils/cookies";
 
 export default function Profile() {
   const dataObject = GetCookieInfo();
@@ -25,6 +26,18 @@ export default function Profile() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
+  const onClick = async () => {
+    deleteCookie("access_token");
+    const response = await fetch("http://localhost:3500/auth/logout", {
+      credentials: "include",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.status === 202) window.location.href = "/";
+    else console.log("error");
+  };
   return (
     <div className="hidden lg:flex gap-12 child:cursor-pointer w-11 h-11 rounded-full items-center justify-center relative">
       <div
@@ -54,14 +67,14 @@ export default function Profile() {
               />
               Settings
             </Link>
-            <Link className="flex items-center gap-2 group">
+            <button className="flex items-center gap-2 group" onClick={onClick}>
               <img
                 src={Logout}
                 className="h-5 group-hover:opacity-50 duration-300 ease-in-out"
                 alt="Logout icon"
               />
               Logout
-            </Link>
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

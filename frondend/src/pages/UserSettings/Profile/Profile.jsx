@@ -23,8 +23,8 @@ export default function Profile() {
         setValue={setUsername}
       ></Blackinput>
       <Blackinput
-        title="Username"
-        type="text"
+        title="Email"
+        type="email"
         value={email}
         setValue={setEmail}
       ></Blackinput>
