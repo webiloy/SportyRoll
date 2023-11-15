@@ -11,6 +11,7 @@ import { WebsiteContext } from "./context/WebsiteContext";
 import { getCookie } from "./utils/cookies";
 import { Exercises } from "./pages/Library/Exercises";
 import { Workouts } from "./pages/Library/Workouts";
+import UserSettings from "./pages/UserSettings/UserSettings";
 function MainRoutes() {
   // is Logged In
   const [isSigned, setIsSigned] = useState(
@@ -22,10 +23,7 @@ function MainRoutes() {
       path: "/",
       element: <Layout />,
       children: [
-        {
-          path: "",
-          element: !isSigned ? <Home /> : <h1>Hello</h1>,
-        },
+        { path: "", element: !isSigned ? <Home /> : <h1>Hello</h1> },
         { path: "*", element: <NotFoundPage /> },
       ],
     },
@@ -33,15 +31,17 @@ function MainRoutes() {
       path: "library",
       element: <Layout />,
       children: [
-        {
-          path: "exercises",
-          element: <Exercises />,
-        },
-        {
-          path: "workouts",
-          element: <Workouts />,
-        },
+        { path: "exercises", element: <Exercises /> },
+        { path: "workouts", element: <Workouts /> },
         { path: "*", element: <NotFoundPage /> },
+      ],
+    },
+    {
+      path: "user",
+      element: <Layout />,
+      children: [
+        { path: "profile", element: <UserSettings page={"profile"} /> },
+        { path: "password", element: <UserSettings page={"password"} /> },
       ],
     },
     { path: "signup", element: <Signup /> },

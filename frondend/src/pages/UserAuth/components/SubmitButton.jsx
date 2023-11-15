@@ -13,7 +13,7 @@ export default function SubmitButton({ onClick, isPending, text }) {
       onMouseLeave={() => setMouseHover(false)}
     >
       <p>{isPending ? "Loading..." : text}</p>
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {mosueHover && (
           <motion.div
             className="absolute"
