@@ -17,16 +17,18 @@ export default function Profile() {
       <div>
         <h1 className="font-medium text-2xl">Profile</h1>
       </div>
-      <div className="relative">
+      <div className="relative group">
         <Blackinput
           title="Username"
           type="text"
           value={username}
           setValue={setUsername}
         ></Blackinput>
-        <button className="absolute top-2/4 right-2">
-          <img src={Edit} className="w-5" alt="" />
-        </button>
+        <div className="absolute bottom-0 right-3 h-10 flex items-center duration-300 ease-in-out group-hover:opacity-100 opacity-0">
+          <button className="">
+            <img src={Edit} className="w-5" alt="" />
+          </button>
+        </div>
       </div>
       <Blackinput
         title="Email"
