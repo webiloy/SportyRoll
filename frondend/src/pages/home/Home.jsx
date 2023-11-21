@@ -10,8 +10,12 @@ export function Home() {
   if (auth) window.location.href = "/discovery";
   return (
     <>
-      <HeroSec></HeroSec> <Features></Features> <Hiw></Hiw> <Cfa></Cfa>
-      <Faq></Faq>
+      {!auth && (
+        <>
+          <HeroSec></HeroSec> <Features></Features> <Hiw></Hiw> <Cfa></Cfa>
+          <Faq></Faq>
+        </>
+      )}
     </>
   );
 }

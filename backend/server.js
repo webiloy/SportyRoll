@@ -16,18 +16,20 @@ connectDB();
 app.use(cors(corsOptions));
 // json Accept
 app.use(express.json());
-//
-app.use(isAllowed);
+// Only the Sites URL
+// app.use(isAllowed);
 //
 app.use(cookieParser());
 // Styles Folder
 app.use(express.static("public"));
 // index Route
 app.use("/", require("./routes/root"));
-// Users Route
-app.use("/users", require("./routes/userRoutes"));
 // Authentication Route
 app.use("/auth", require("./routes/authRoutes"));
+// Users Route
+app.use("/users", require("./routes/userRoutes"));
+// Users Route
+app.use("/exercise", require("./routes/exerciseRoutes"));
 // 404 Route
 app.all("*", require("./routes/404"));
 

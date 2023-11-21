@@ -12,7 +12,7 @@ import { Signup } from "./pages/UserAuth/signup/Signup";
 import { Exercises } from "./pages/Library/Exercises";
 import { Workouts } from "./pages/Library/Workouts";
 import { NotFoundPage } from "./pages/404/404";
-const UserSettings = lazy(() => import("./pages/UserSettings/UserSettings"));
+import UserSettings from "./pages/UserSettings/UserSettings";
 // Router
 import { RouterRender } from "./RoutesConfig/RouterRender";
 import Layout from "./RoutesConfig/Layout";
