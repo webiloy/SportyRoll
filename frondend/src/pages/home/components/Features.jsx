@@ -1,6 +1,6 @@
-import { AiOutlineCheck } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import Checkmark from "../../../components/Icons/Checkmark";
 export function Features() {
   const SectionRef = useRef(null);
   const location = useLocation();
@@ -24,17 +24,17 @@ export function Features() {
             <h1 className="hidden md:block text-white font-bold text-3xl lg:text-4xl xl:text-5xl text-left">
               Extensive Collection of<br></br>Certified Trainer-Curated Workouts
             </h1>
-            <ul className="text-secondary-text text-sm md:text-lg lg:text-xl xl:text-2xl flex flex-col gap-6 child:flex child:items-start child:gap-1 md:child:gap-2 my-8 max-w-lg">
+            <ul className="text-secondary-text text-sm md:text-lg lg:text-xl xl:text-2xl flex flex-col gap-6 child:flex child:items-center child:gap-1 md:child:gap-2 my-8 max-w-lg">
               <li>
-                <AiOutlineCheck className="text-xl md:text-2xl lg:text-3xl flex-shrink-0"></AiOutlineCheck>
+                <Checkmark className="h-5 w-5 lg:h-8 lg:w-8 flex-shrink-0 md:text-2xl lg:text-3xl"></Checkmark>
                 Get fitness plans crafted by experts
               </li>
               <li>
-                <AiOutlineCheck className="text-xl flex-shrink-0 md:text-2xl lg:text-3xl"></AiOutlineCheck>
+                <Checkmark className="h-5 w-5 lg:h-8 lg:w-8 flex-shrink-0 md:text-2xl lg:text-3xl"></Checkmark>
                 Choose from more than 20 personalized routines
               </li>
               <li>
-                <AiOutlineCheck className="text-xl flex-shrink-0 md:text-2xl lg:text-3xl"></AiOutlineCheck>
+                <Checkmark className="h-5 w-5 lg:h-8 lg:w-8 flex-shrink-0 md:text-2xl lg:text-3xl"></Checkmark>
                 Track your fitness journey effortlessly
               </li>
               <li className="text-secondary underline ">
@@ -55,23 +55,14 @@ export function Features() {
               Your Supportive Fitness Community
             </h1>
             <ul className="text-secondary-text text-sm md:text-lg lg:text-xl xl:text-2xl flex flex-col gap-6 child:flex child:items-start child:gap-1 md:child:gap-2 mt-8 max-w-lg ">
+              <li>Join like-minded individuals for support</li>
               <li>
-                <AiOutlineCheck className="text-xl flex-shrink-0 md:text-2xl lg:text-3xl"></AiOutlineCheck>
-                Join like-minded individuals for support
-              </li>
-              <li>
-                <AiOutlineCheck className="text-xl flex-shrink-0 md:text-2xl lg:text-3xl"></AiOutlineCheck>
+                {/* <AiOutlineCheck className="text-xl flex-shrink-0 md:text-2xl lg:text-3xl"></AiOutlineCheck> */}
                 Find motivation in the inspiring success stories of our
                 community members
               </li>
-              <li>
-                <AiOutlineCheck className="text-xl flex-shrink-0 md:text-2xl lg:text-3xl"></AiOutlineCheck>
-                Access guidance from trainers and members
-              </li>
-              <li>
-                <AiOutlineCheck className="text-xl flex-shrink-0 md:text-2xl lg:text-3xl"></AiOutlineCheck>
-                Share your progress and achieve your fitness goals
-              </li>
+              <li>Access guidance from trainers and members</li>
+              <li>Share your progress and achieve your fitness goals</li>
             </ul>
           </div>
         </div>

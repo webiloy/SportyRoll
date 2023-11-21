@@ -1,4 +1,4 @@
-import { BsDiscord } from "react-icons/bs";
+import Discord from "../../../components/Icons/Discord";
 import { Link } from "react-router-dom";
 export function Cfa() {
   return (
@@ -19,7 +19,7 @@ export function Cfa() {
           Sign Up
         </Link>
         <li className="flex gap-2 justify-center items-center text-secondary border-[3px] border-secondary p-3 md:px-5">
-          <BsDiscord className="text-xl"></BsDiscord>Join the Community
+          <Discord className={"fill-secondary"}></Discord> Join the Community
         </li>
       </ul>
     </div>

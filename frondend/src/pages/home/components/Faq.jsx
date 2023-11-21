@@ -1,7 +1,6 @@
-import { AiOutlinePlus } from "react-icons/ai";
-
-import { MdKeyboardArrowDown } from "react-icons/md";
 import { AnimatePresence, motion } from "framer-motion";
+import Plus from "../../../components/Icons/Plus";
+import Arrow from "../../../components/Icons/Arrow";
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 export function Faq() {
@@ -70,15 +69,9 @@ export function Faq() {
               >
                 {info.question}
                 {!answerIsOpen ? (
-                  <AiOutlinePlus
-                    size={30}
-                    className="text-lg lg:text-xl flex-shrink-0"
-                  ></AiOutlinePlus>
+                  <Plus className={"w-fit fill-white"}></Plus>
                 ) : (
-                  <MdKeyboardArrowDown
-                    size={30}
-                    className="text-lg lg:text-xl flex-shrink-0"
-                  ></MdKeyboardArrowDown>
+                  <Arrow classname={"w-fit fill-white"}></Arrow>
                 )}
               </div>
               <AnimatePresence mode="wait" initial={false}>
