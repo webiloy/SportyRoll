@@ -9,7 +9,7 @@ import { setCookie } from "../../../../utils/cookies";
 import Socialbtns from "../../components/Socialbtns/Socialbtns";
 import SubmitButton from "../../components/SubmitButton";
 export default function Signupform() {
-  const { setIsSigned } = useContext(WebsiteContext);
+  const { setAuth } = useContext(WebsiteContext);
   const userRef = useRef();
   const errRef = useRef();
   const [email, setEmail] = useState("");
@@ -56,7 +56,7 @@ export default function Signupform() {
     expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000);
     setCookie("access_token", data.accsessToken, { expires: expirationDate });
     if (getCookie("access_token")) {
-      setIsSigned(true);
+      setAuth(true);
       window.location.href = "/";
     }
   }, [isSuccess]);

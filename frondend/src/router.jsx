@@ -1,4 +1,5 @@
 import { Routes } from "react-router-dom";
+import Loading from "./components/animations/Loading";
 import { RouterRender } from "./RoutesConfig/RouterRender";
 import Layout from "./RoutesConfig/Layout";
 import { AnimatePresence } from "framer-motion";
@@ -6,24 +7,36 @@ import { Home } from "./pages/home/Home";
 import { Login } from "./pages/UserAuth/login/Login";
 import { Signup } from "./pages/UserAuth/signup/Signup";
 import { NotFoundPage } from "./pages/404/404";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { WebsiteContext } from "./context/WebsiteContext";
-import { getCookie } from "./utils/cookies";
 import { Exercises } from "./pages/Library/Exercises";
 import { Workouts } from "./pages/Library/Workouts";
+import { useQuery } from "@tanstack/react-query";
+import Getuserinfo from "./hooks/information/Getuserinfo";
 import UserSettings from "./pages/UserSettings/UserSettings";
+import { Toaster, toast } from "sonner";
 function MainRoutes() {
   // is Logged In
-  const [isSigned, setIsSigned] = useState(
-    getCookie("access_token") ? true : false
-  );
+  const [auth, setAuth] = useState(null);
+  const { data, status } = useQuery({
+    queryKey: ["UserData"],
+    queryFn: Getuserinfo,
+    retry: false,
+    enabled: auth === null,
+  });
+  useEffect(() => {
+    if (status === "success") setAuth(data ? true : false);
+  }, [status, data]);
+  useEffect(() => {
+    if (auth?.message) toast.success(auth?.message);
+  }, [auth]);
   // Paths
   const routePaths = [
     {
       path: "/",
       element: <Layout />,
       children: [
-        { path: "", element: !isSigned ? <Home /> : <h1>Hello</h1> },
+        { path: "", element: !auth ? <Home /> : <h1>Hello</h1> },
         { path: "*", element: <NotFoundPage /> },
       ],
     },
@@ -47,10 +60,22 @@ function MainRoutes() {
     { path: "signup", element: <Signup /> },
     { path: "login", element: <Login /> },
   ];
+  const Contextobject = {
+    setAuth,
+    auth,
+    data,
+  };
   return (
-    <WebsiteContext.Provider value={{ setIsSigned, isSigned }}>
+    <WebsiteContext.Provider value={Contextobject}>
+      <Toaster richColors />
       <AnimatePresence mode="wait">
-        <Routes>{RouterRender(routePaths)}</Routes>
+        {auth === null && (
+          <Loading
+            size={"w-screen h-screen"}
+            color={"stroke-secondary"}
+          ></Loading>
+        )}
+        {auth !== null && <Routes>{RouterRender(routePaths)}</Routes>}
       </AnimatePresence>
     </WebsiteContext.Provider>
   );

@@ -7,7 +7,7 @@ import AuthLinks from "./components/AuthLinks";
 import Mobile from "./components/Mobile";
 import Profile from "./components/Profile";
 export function Navbar() {
-  const { setIsSigned, isSigned } = useContext(WebsiteContext);
+  const { auth } = useContext(WebsiteContext);
   const { visible, prevScrollPos } = NavScroll();
   const NavBackground = !(prevScrollPos >= 100) && "md:bg-transparent ";
   const NavOpacity = visible ? "opacity-100" : "opacity-0 pointer-events-none";
@@ -28,7 +28,7 @@ export function Navbar() {
           </ul>
         </div>
         <Mobile></Mobile>
-        {isSigned ? <Profile></Profile> : <AuthLinks></AuthLinks>}
+        {auth !== false ? <Profile></Profile> : <AuthLinks></AuthLinks>}
       </div>
     </>
   );

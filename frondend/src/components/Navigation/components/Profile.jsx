@@ -1,14 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-import GetCookieInfo from "../../../utils/GetCookieInfo";
+import { useState, useEffect, useRef, useContext } from "react";
+import { WebsiteContext } from "../../../context/WebsiteContext";
 import { motion, AnimatePresence } from "framer-motion";
 import Logout from "../../../assets/Icons/Logout.svg";
 import Settings from "../../../assets/Icons/Settings.svg";
 import { Link } from "react-router-dom";
-import { deleteCookie, getCookie } from "../../../utils/cookies";
-
 export default function Profile() {
-  const dataObject = GetCookieInfo();
-  const UserInfo = dataObject?.UserInfo;
+  const { data } = useContext(WebsiteContext);
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
   useEffect(() => {
@@ -27,13 +24,10 @@ export default function Profile() {
     };
   }, [isOpen]);
   const onClick = async () => {
-    deleteCookie("access_token");
     const response = await fetch("http://localhost:3500/auth/logout", {
       credentials: "include",
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
     });
     if (response.status === 202) window.location.href = "/";
     else console.log("error");
@@ -44,7 +38,7 @@ export default function Profile() {
         className="bg-gradient-to-bl from-NiceGray to-[#141414] w-full h-full flex justify-center items-center rounded-full"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {UserInfo?.username.slice("0", "1").toUpperCase()}
+        {data?.username.slice("0", "1").toUpperCase()}
       </div>
       <AnimatePresence mode={"wait"}>
         {isOpen && (

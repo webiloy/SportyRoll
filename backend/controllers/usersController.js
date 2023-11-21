@@ -6,6 +6,7 @@ const User = require("../models/User");
 //  @route GET /users
 // @accsess Private
 const getAllUsers = asyncHandler(async (req, res) => {
+  if (!req.access) return res.status(403).json({ message: "Not Allowed" });
   const users = await User.find().select("-password");
   if (!users) return res.status(400).json({ message: "No Users Found" });
   else res.json({ users: users });
@@ -30,29 +31,8 @@ const createNewUser = asyncHandler(async (req, res) => {
   const user = await User.create(userObject);
   // gives back cookie
   if (user && giveCookie) {
-    const accsessToken = jwt.sign(
-      {
-        UserInfo: {
-          _id: user._id,
-          username: user.username,
-          access: user.access,
-        },
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1h" }
-    );
-    const refreshToken = jwt.sign(
-      { username: user.username },
-      process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "7d" }
-    );
-    res.cookie("jwt", refreshToken, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "none",
-      maxAge: 30 * 24 * 60 * 1000, // 30 days
-    });
-    return res.status(202).json({ accsessToken });
+    const accessToken = authHelpers.generateTokensAndSetCookie(res, user);
+    return res.status(202).json({ accessToken });
   } else if (user)
     return res.status(202).json({ message: `User ${user.username} Created!` });
   else return res.status(400).json({ message: "Invalid user data received" });
@@ -61,31 +41,33 @@ const createNewUser = asyncHandler(async (req, res) => {
 // @route Patch /users
 // @accsess Private
 const updateUser = asyncHandler(async (req, res) => {
-  const { id, username, email, password, accsess, workouts } = req.body;
-  if (
-    !id ||
-    !username ||
-    !email ||
-    !password ||
-    accsess === null ||
-    !Array.isArray(workouts) ||
-    workouts?.length === null
-  )
-    return res.status(400).json({ message: "All fields are required" });
-  const user = await User.findById(id).exec();
+  const { id, username, email, password, oldpassword, access, workouts } =
+    req.body;
+  const user = await User.findById(id || req.id).exec();
   if (!user) return res.status(400).json({ message: "User not found" });
   const duplicate = await User.find({ username }).lean().exec();
-  if (duplicate && duplicate[0]?._id.toString() !== id)
-    return res.status(409).json({ message: "Duplicate Username" });
-  user.username = username;
-  user.email = email;
-  user.workouts = workouts;
-  user.accsess = accsess;
-  if (password) user.password = await bcrypt.hash(password, 10);
+  if (duplicate?.length > 0 && duplicate[0]?._id.toString() !== (id || req.id))
+    return res.status(409).json({ message: "Username Taken" });
+  user.username = username || user.username;
+  user.email = email || user.email;
+  user.workouts = workouts || user.workouts;
+  user.access = access || user.access;
+  if (password) {
+    const match = await bcrypt.compare(oldpassword, user.password);
+    if (!match)
+      return res.status(401).json({
+        message:
+          "Invalid password. Please enter the correct password associated with your account.",
+      });
+    if (password === oldpassword)
+      return res.status(409).json({
+        message: "Please choose a password distinct from the previous 5.",
+      });
+    user.password = await bcrypt.hash(password, 10);
+  }
   const updatedUser = await user.save();
-  res.json({ message: `${updatedUser.username} updated` });
+  res.status(202).json({ message: `${updatedUser.username} updated` });
 });
-
 // @desc delete user
 // @route Patch /users
 // @accsess Private
@@ -99,10 +81,17 @@ const deleteUser = asyncHandler(async (req, res) => {
     message: `The username : ${user.username} with the ID : ${user._id} was deleted`,
   });
 });
-
+const getUser = asyncHandler(async (req, res) => {
+  const id = req.id;
+  if (!id) return res.status(400).json({ message: "id is required" });
+  const user = await User.findById(id).select("-password").exec();
+  if (!user) return res.status(400).json({ message: "user not found" });
+  res.status(202).json(user);
+});
 module.exports = {
   getAllUsers,
   createNewUser,
   updateUser,
   deleteUser,
+  getUser,
 };

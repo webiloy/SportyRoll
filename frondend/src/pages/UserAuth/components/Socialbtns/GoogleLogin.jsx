@@ -3,10 +3,8 @@ import PropTypes from "prop-types";
 import { useContext } from "react";
 import { WebsiteContext } from "../../../../context/WebsiteContext";
 import Google from "../../../../assets/Icons/Google.svg";
-import { getCookie } from "../../../../utils/cookies";
-import { setCookie } from "../../../../utils/cookies";
 export default function GoogleLogin({ setErrMesg }) {
-  const { setIsSigned } = useContext(WebsiteContext);
+  const { setAuth } = useContext(WebsiteContext);
   const signIn = useGoogleLogin({
     onSuccess: (credentialResponse) => OnSuccess(credentialResponse),
   });
@@ -21,11 +19,8 @@ export default function GoogleLogin({ setErrMesg }) {
     });
     if (response.status === 202) {
       const data = await response.json();
-      const expirationDate = new Date();
-      expirationDate.setTime(expirationDate.getTime() + 60 * 60 * 1000);
-      setCookie("access_token", data.accessToken, { expires: expirationDate });
-      if (getCookie("access_token")) {
-        setIsSigned(true);
+      if (data) {
+        setAuth(true);
         window.location.href = "/";
       } else setErrMesg("Error Loggin in with Google");
     } else {

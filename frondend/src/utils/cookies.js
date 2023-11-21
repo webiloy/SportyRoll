@@ -23,7 +23,7 @@ export function setCookie(name, value, options) {
   }
   if (options.path) cookie += `; path=${options.path}`;
   if (options.domain) cookie += `; domain=${options.domain}`;
-  if (options.secure) cookie += "; secure";
+  if (options.secure) cookie += "; Secure";
   document.cookie = cookie;
 }
 

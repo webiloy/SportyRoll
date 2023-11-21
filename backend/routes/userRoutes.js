@@ -10,4 +10,5 @@ router
   .patch(verifyJWT, usersController.updateUser)
   .delete(verifyJWT, usersController.deleteUser);
 
+router.route("/find").get(verifyJWT, usersController.getUser);
 module.exports = router;

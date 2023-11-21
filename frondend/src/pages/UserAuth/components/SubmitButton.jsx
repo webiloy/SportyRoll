@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Loading from "../../../components/animations/Loading";
 import { RightArrowSVG } from "../../../components/Icons/RightArrowSVG";
 import { AnimatePresence, motion } from "framer-motion";
 import PropTypes from "prop-types";
@@ -12,14 +13,20 @@ export default function SubmitButton({ onClick, isPending, text }) {
       onMouseEnter={() => setMouseHover(true)}
       onMouseLeave={() => setMouseHover(false)}
     >
-      <p>{isPending ? "Loading..." : text}</p>
+      <p>
+        {isPending ? (
+          <Loading color={"stroke-secondary"} size={"w-6 h-6"}></Loading>
+        ) : (
+          text
+        )}
+      </p>
       <AnimatePresence>
-        {mosueHover && (
+        {mosueHover && !isPending && (
           <motion.div
             className="absolute"
-            initial={{ x: "75px", opacity: 0 }}
-            animate={{ x: "80px", opacity: 1 }}
-            exit={{ x: "75px", opacity: 0 }}
+            initial={{ x: 75, opacity: 0 }}
+            animate={{ x: 80, opacity: 1 }}
+            exit={{ x: 75, opacity: 0 }}
             transition={{ duration: 0.5, type: "spring", bounce: 0.5 }}
           >
             <RightArrowSVG fill={"white"}></RightArrowSVG>

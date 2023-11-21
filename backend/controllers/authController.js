@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const authHelpers = require("../utils/auth/authHelpers");
 // @desc Login
 // @route POST /auth
-// @accsess Public
+// @access Public
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   // Normal Login
@@ -15,8 +15,8 @@ const login = asyncHandler(async (req, res) => {
   if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
   const match = await bcrypt.compare(password, foundUser.password);
   if (!match) return res.status(401).json({ message: "Unauthorized" });
-  const accsessToken = authHelpers.generateTokensAndSetCookie(res, foundUser);
-  return res.status(202).json({ accsessToken });
+  const accessToken = authHelpers.generateTokensAndSetCookie(res, foundUser);
+  return res.status(202).json({ accessToken });
 });
 // @desc Google Login
 // @route POST /auth/google
@@ -70,7 +70,7 @@ const FacebookLogin = asyncHandler(async (req, res) => {
 });
 // @desc Refresh
 // @route POST /auth/refresh
-// @accsess Public accsess webtoken expierd
+// @access Public access webtoken expierd
 const refresh = asyncHandler(async (req, res) => {
   const cookies = req.cookies;
   if (!cookies.jwt) return res.status(401).json({ message: "Unauthorized" });
@@ -82,29 +82,34 @@ const refresh = asyncHandler(async (req, res) => {
       if (err) return res.status(403).json({ message: "Forbidden" });
       const foundUser = await User.findOne({ username: decoded.username });
       if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
-      const accsessToken = jwt.sign(
+      const accessToken = jwt.sign(
         {
           UserInfo: {
             _id: foundUser._id,
             username: foundUser.username,
             email: foundUser.email,
-            accsess: foundUser.access,
+            access: foundUser.access,
           },
         },
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: "1h" }
       );
-      res.json({ accsessToken });
+      res.json({ accessToken });
     })
   );
 });
 // @desc Logout
 // @route POST /auth/logout
-// @accsess Public - clears cookie if exists
+// @access Public - clears cookie if exists
 const logout = asyncHandler(async (req, res) => {
   const cookies = req.cookies;
   if (!cookies.jwt) return res.sendStatus(204);
   res.clearCookie("jwt", { httpOnly: true, sameSite: "none", secure: true });
+  res.clearCookie("access_token", {
+    httpOnly: true,
+    sameSite: "none",
+    secure: true,
+  });
   res.status(202).json({ message: "Cookie cleared" });
 });
 

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { forwardRef } from "react";
 export const Blackinput = forwardRef(
-  ({ title, type, value, setValue, className }, ref) => {
+  ({ title, type, value, setValue, className, disabled }, ref) => {
     return (
       <div className={`flex flex-col gap-1 ${className}`}>
         <label
@@ -20,6 +20,7 @@ export const Blackinput = forwardRef(
           onChange={(e) => {
             setValue(e.target.value);
           }}
+          disabled={disabled}
           required
           className="outline-none rounded-md px-3 text-sm h-10 w-full bg-transparent border border-gray-500"
         ></input>
@@ -34,4 +35,5 @@ Blackinput.propTypes = {
   value: PropTypes.string,
   setValue: PropTypes.func.isRequired,
   className: PropTypes.string,
+  disabled: PropTypes.bool,
 };

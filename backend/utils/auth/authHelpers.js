@@ -13,7 +13,7 @@ function generateTokensAndSetCookie(res, user) {
       },
     },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "1h" }
+    { expiresIn: "3h" }
   );
   const refreshToken = jwt.sign(
     { username: user.username },
@@ -23,12 +23,18 @@ function generateTokensAndSetCookie(res, user) {
 
   res.cookie("jwt", refreshToken, {
     httpOnly: true,
-    secure: false,
-    sameSite: "none",
+    secure: true,
+    sameSite: "None",
     maxAge: 30 * 24 * 60 * 1000, // 30 days
   });
+  res.cookie("access_token", accessToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "None",
+    maxAge: 3 * 60 * 60 * 1000, // 3 hours in milliseconds
+  });
 
-  return accessToken;
+  return true;
 }
 const getValidUsername = async (username, email) => {
   let name = username;

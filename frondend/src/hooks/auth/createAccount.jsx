@@ -1,5 +1,4 @@
 import axios from "axios";
-
 export default async function createAccount(newAccount) {
   try {
     const response = await axios.post(
@@ -7,9 +6,7 @@ export default async function createAccount(newAccount) {
       newAccount,
       {
         withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
       }
     );
     return response.data;
