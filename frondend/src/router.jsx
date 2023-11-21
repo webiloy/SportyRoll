@@ -1,20 +1,22 @@
+import { useEffect, useState, lazy } from "react";
 import { Routes } from "react-router-dom";
 import Loading from "./components/animations/Loading";
-import { RouterRender } from "./RoutesConfig/RouterRender";
-import Layout from "./RoutesConfig/Layout";
-import { AnimatePresence } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { Toaster, toast } from "sonner";
+import Getuserinfo from "./hooks/information/Getuserinfo";
+import { WebsiteContext } from "./context/WebsiteContext";
+// Pages
 import { Home } from "./pages/home/Home";
 import { Login } from "./pages/UserAuth/login/Login";
 import { Signup } from "./pages/UserAuth/signup/Signup";
-import { NotFoundPage } from "./pages/404/404";
-import { useEffect, useState } from "react";
-import { WebsiteContext } from "./context/WebsiteContext";
 import { Exercises } from "./pages/Library/Exercises";
 import { Workouts } from "./pages/Library/Workouts";
-import { useQuery } from "@tanstack/react-query";
-import Getuserinfo from "./hooks/information/Getuserinfo";
-import UserSettings from "./pages/UserSettings/UserSettings";
-import { Toaster, toast } from "sonner";
+import { NotFoundPage } from "./pages/404/404";
+const UserSettings = lazy(() => import("./pages/UserSettings/UserSettings"));
+// Router
+import { RouterRender } from "./RoutesConfig/RouterRender";
+import Layout from "./RoutesConfig/Layout";
+import { AnimatePresence } from "framer-motion";
 function MainRoutes() {
   // is Logged In
   const [auth, setAuth] = useState(null);
@@ -36,7 +38,7 @@ function MainRoutes() {
       path: "/",
       element: <Layout />,
       children: [
-        { path: "", element: !auth ? <Home /> : <h1>Hello</h1> },
+        { path: "", element: <Home /> },
         { path: "*", element: <NotFoundPage /> },
       ],
     },
