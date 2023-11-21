@@ -11,3 +11,18 @@ body {
 * {
   font-family: "Inter", sans-serif;
 }
+body::-webkit-scrollbar {
+  width: 3px;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  margin: 10px 0px;
+}
+
+body::-webkit-scrollbar-thumb {
+  margin-right: 5px;
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+  border-radius: 10px;
+}

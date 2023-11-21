@@ -88,7 +88,7 @@ export function Faq() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="text-gray-500 overflow-y-scroll"
+                    className="text-gray-500 sm:overflow-y-hidden overflow-y-auto"
                   >
                     {info.answer}
                   </motion.div>
