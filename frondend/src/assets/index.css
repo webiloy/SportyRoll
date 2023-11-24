@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 body {
-  background: rgb(8, 8, 8);
+  background: #161616;
   scroll-behavior: smooth;
 }
 

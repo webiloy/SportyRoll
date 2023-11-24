@@ -1,24 +1,91 @@
 const asyncHandler = require("express-async-handler");
 const Exercise = require("../models/Exercise");
-
 const getAllExercise = asyncHandler(async (req, res) => {
-  //   const ExerciseObject = {
-  //     name: "pull up",
-  //     description: "just pull you up",
-  //     weight: "2",
-  //     sets: "2",
-  //     reps: "3",
-  //     type: "black",
-  //   };
-  //   const exercise = await Exercise.create(ExerciseObject);
-  //   if (!exercise) return res.status(400).json({ message: "Cant Create" });
-  const exercises = await Exercise.find().exec();
-  console.log(exercises);
-  if (!exercises)
-    return res.status(400).json({ message: "No exercises Found" });
-  else res.json({ exercises: exercises });
+  const Exercises = await Exercise.find();
+  if (!Exercises)
+    return res.status(400).json({ message: "No Exercises Found" });
+  else res.json({ exercises: Exercises });
+});
+const addExercise = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+});
+const searchExercise = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const name = id.replaceAll("-", " ");
+  const exercises = await Exercise.find({
+    name: { $regex: new RegExp(name, "i") },
+  });
+  if (exercises.length === 0)
+    return res.status(400).json({ message: "No Exercises Found" });
+  else res.status(200).json({ exercises: exercises });
 });
 
 module.exports = {
   getAllExercise,
+  addExercise,
+  searchExercise,
 };
+// const FetchURL =
+//     "https://musclewiki.com/newapi/exercise/exercises/?limit=15&offset=0&category=&muscles=11&status=Published&ordering=-featured_weight";
+//   const response = await fetch(FetchURL);
+//   const data = await response.json();
+//   if (!data) return res.json("Error Fetching Data");
+//   let index = 0; // Initialize the index
+//   const processData = async () => {
+//     if (index < data.results.length) {
+//       console.log("Started");
+//       const name = data.results[index].name
+//         .toLocaleLowerCase()
+//         .replaceAll(" ", "-");
+//       const duplicate = await Exercise.find({ name: data.results[index].name })
+//         .lean()
+//         .exec();
+//       if (duplicate && duplicate?.length > 0) {
+//         console.log(`Exercise ${duplicate[0]?.name} Found Not Needed To Add`);
+//         return index++;
+//       }
+//       const exerciseInfo = await fetch(
+//         `https://musclewiki.com/newapi/exercise/exercises/?slug=${name}`
+//       );
+//       const exerciseData = await exerciseInfo.json();
+//       if (exerciseData.results.length > 0) {
+//         const muscles = {};
+//         const primaryMuscle = [];
+//         const secondary = [];
+//         const thhird = [];
+//         exerciseData.results[0].muscles_primary.forEach((muscle) => {
+//           const muscleObject = muscle.name;
+//           primaryMuscle.push(muscleObject);
+//         });
+//         exerciseData.results[0].muscles_secondary.forEach((muscle) => {
+//           const muscleObject = muscle.name;
+//           secondary.push(muscleObject);
+//         });
+//         exerciseData.results[0].muscles_tertiary.forEach((muscle) => {
+//           const muscleObject = muscle.name;
+//           thhird.push(muscleObject);
+//         });
+//         muscles.muscles_primary = primaryMuscle;
+//         muscles.muscles_secondary = secondary;
+//         muscles.muscles_tertiary = thhird;
+//         const ExObject = {
+//           name: exerciseData?.results[0].name,
+//           description: exerciseData?.results[0]?.muscles[0]?.description,
+//           muscles: muscles,
+//           category: [exerciseData.results[0].category.name],
+//           difficulty: exerciseData.results[0].difficulty.id,
+//           type: "Strength",
+//         };
+//         const exercises = await Exercise.create(ExObject);
+//         if (!exercises) console.log("Error");
+//         else console.log(`Exercise ${exerciseData?.results[0].name} Added`);
+//       }
+//       index++;
+//       if (index >= data.results.length) {
+//         clearInterval(interval);
+//         console.log("Finised");
+//         res.json({ message: "All itmes Added" });
+//       }
+//     }
+//   };
+//   const interval = setInterval(processData, 2000);

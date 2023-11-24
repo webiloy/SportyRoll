@@ -14,7 +14,7 @@ export function Navbar() {
   return (
     <>
       <div
-        className={`${NavBackground} ${NavOpacity} duration-300 ease-in-out flex justify-between p-4 lg:p-6 px-8 lg:px-12 fixed z-50 top-0 left-1/2 -translate-x-1/2 w-full  text-white items-center lg:child:items-center h-16 lg:h-[5.5rem] bg-black max-w-[2000px] m-auto `}
+        className={`${NavBackground} ${NavOpacity} duration-300 ease-in-out flex justify-between p-4 lg:p-6 px-8 lg:px-12 fixed z-50 top-0 left-1/2 -translate-x-1/2 w-full  text-white items-center lg:child:items-center h-16 lg:h-[5.5rem] bg-[#161616] max-w-[2000px] m-auto `}
       >
         <div className="flex gap-8">
           <Link to={"/"} className="flex items-center justify-center gap-1">
