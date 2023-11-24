@@ -1,6 +1,4 @@
 import PropTypes from "prop-types";
-import dumbellIcon from "../../../assets/Icons/dumbellicon.svg";
-import dumbell from "../../../assets/Icons/Vector.svg";
 import Dumbell from "../../../components/Icons/Dumbell";
 import Plus from "../../../components/Icons/Plus";
 export default function Exercise({ exercise }) {

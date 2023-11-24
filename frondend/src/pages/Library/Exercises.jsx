@@ -3,19 +3,17 @@ import Arrow from "../../components/Icons/Arrow";
 import SearchBar from "./components/SearchBar";
 import { useQuery } from "@tanstack/react-query";
 import Search from "../../hooks/exercises/Search";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Exercise from "./components/Exercise";
 import LoadingTemplate from "./components/LoadingTemplate";
 export function Exercises() {
   const [search, setSearch] = useState("");
-  const { data, status, refetch } = useQuery({
+  const { data, status } = useQuery({
     queryKey: ["ExerciseSearch", search],
     queryFn: () => Search(search),
+    retry: false,
+    retryOnMount: false,
   });
-  useEffect(() => {
-    refetch();
-  }, [search, refetch]);
-  console.log(data);
   return (
     <div className="min-h-[450px] py-16 max-w-[2000px] m-auto lg:px-12">
       <h1 className="text-light-text p-6 py-8 border-y-2 text-2xl font-semibold border-[#414141] lg:px-0 lg:border-none lg:font-medium lg:p-0 lg:mt-12">
@@ -50,9 +48,14 @@ export function Exercises() {
           </>
         )}
         {status === "success" &&
-          data.exercises.map((exercise, index) => {
+          data.exercises.map((exercise) => {
             return <Exercise key={exercise._id} exercise={exercise}></Exercise>;
           })}
+        {status === "error" && (
+          <>
+            <div>No exercises found.</div>
+          </>
+        )}
       </ul>
     </div>
   );

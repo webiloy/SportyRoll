@@ -15,7 +15,7 @@ export default function UserSettings({ page }) {
       <div className="flex flex-col  h-full gap-1 child-hover:bg-zinc-800 child:gap-2 sm:w-1/4 w-full">
         <button
           className={`${
-            section === "profile" && "bg-text"
+            section !== "password" && "bg-NiceGray"
           } h-12 rounded-lg flex items-center duration-300 ease-in-out px-2`}
           onClick={handleClick("profile")}
         >
@@ -24,7 +24,7 @@ export default function UserSettings({ page }) {
         </button>
         <button
           className={`${
-            section === "password" && "bg-text"
+            section === "password" && "bg-NiceGray"
           } text-left h-12 rounded-lg flex items-center duration-300 ease-in-out px-2`}
           onClick={handleClick("password")}
         >

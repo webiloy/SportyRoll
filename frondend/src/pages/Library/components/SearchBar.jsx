@@ -8,6 +8,9 @@ export default function SearchBar({ setSearch, search }) {
     setSearch("");
     SearchRef.current.focus();
   };
+  const onChange = (e) => {
+    setSearch(e.target.value);
+  };
   return (
     <div className="h-10 flex items-center bg-NiceGray px-2 gap-2 relative">
       <label className="w-[24px]" htmlFor="search">
@@ -19,7 +22,7 @@ export default function SearchBar({ setSearch, search }) {
         id="search"
         placeholder="Search for an Exercise"
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={onChange}
         ref={SearchRef}
       />
       <div

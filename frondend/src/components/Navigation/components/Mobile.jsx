@@ -34,16 +34,16 @@ export default function Mobile() {
           <Link onClick={() => setMobileVis(!mobileVis)} to="/">
             Home
           </Link>
-          <Link onClick={() => setMobileVis(!mobileVis)} to="discovery">
+          <Link onClick={() => setMobileVis(!mobileVis)} to="/discovery">
             Discovery
           </Link>
-          <Link onClick={() => setMobileVis(!mobileVis)} to="diary">
+          <Link onClick={() => setMobileVis(!mobileVis)} to="/diary">
             Diary
           </Link>
-          <Link onClick={() => setMobileVis(!mobileVis)} to="calculator">
+          <Link onClick={() => setMobileVis(!mobileVis)} to="/calculator">
             Calculator
           </Link>
-          <Link onClick={() => setMobileVis(!mobileVis)} to="contact-us">
+          <Link onClick={() => setMobileVis(!mobileVis)} to="/contact-us">
             Contact us
           </Link>
           <p className="w-full h-[1px] bg-white"></p>
