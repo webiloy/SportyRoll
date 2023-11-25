@@ -13,10 +13,12 @@ import { Exercises } from "./pages/Library/Exercises";
 import { Workouts } from "./pages/Library/Workouts";
 import { NotFoundPage } from "./pages/404/404";
 import UserSettings from "./pages/UserSettings/UserSettings";
+import Diray from "./pages/Diray/Diray";
 // Router
 import { RouterRender } from "./RoutesConfig/RouterRender";
 import Layout from "./RoutesConfig/Layout";
 import { AnimatePresence } from "framer-motion";
+import { element } from "prop-types";
 function MainRoutes() {
   // is Logged In
   const [auth, setAuth] = useState(null);
@@ -39,6 +41,7 @@ function MainRoutes() {
       element: <Layout />,
       children: [
         { path: "", element: <Home /> },
+        { path: "diary", element: <Diray /> },
         { path: "*", element: <NotFoundPage /> },
       ],
     },
