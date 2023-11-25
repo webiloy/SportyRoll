@@ -11,10 +11,16 @@ const addExercise = asyncHandler(async (req, res) => {
 });
 const searchExercise = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  const { category } = req.query;
   const name = id.replaceAll("-", " ");
-  const exercises = await Exercise.find({
-    name: { $regex: new RegExp(name, "i") },
-  });
+  // Search with name
+  let query = { name: { $regex: new RegExp(name, "i") } };
+  // Category
+  if (category && category.toLowerCase() !== "featured")
+    query.category = category;
+  // The Search
+  const exercises = await Exercise.find(query);
+  // Response
   if (exercises.length === 0)
     return res.status(400).json({ message: "No Exercises Found" });
   else res.status(200).json({ exercises: exercises });

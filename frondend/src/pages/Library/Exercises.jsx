@@ -1,4 +1,4 @@
-import Filter from "../../components/Icons/Filter";
+import Filter from "./components/Filter";
 import Arrow from "../../components/Icons/Arrow";
 import SearchBar from "./components/SearchBar";
 import { useQuery } from "@tanstack/react-query";
@@ -12,7 +12,6 @@ export function Exercises() {
     queryKey: ["ExerciseSearch", search],
     queryFn: () => Search(search),
     retry: false,
-    retryOnMount: false,
   });
   return (
     <div className="min-h-[450px] py-16 max-w-[2000px] m-auto lg:px-12">
@@ -23,7 +22,7 @@ export function Exercises() {
         <ul className="flex gap-6 lg:px-0 px-2">
           <li className="flex gap-2 items-center">
             {/* <MdTune></MdTune> Filter */}
-            <Filter className={"w-6 h-fit cursor-pointer"}></Filter>
+            <Filter></Filter>
           </li>
           <li className="text-secondary-text flex gap-1 items-center">
             Sort by:
@@ -37,16 +36,12 @@ export function Exercises() {
         </div>
       </div>
       <ul className="grid grid-cols-1 xl:grid-cols-2 w-full child:text-white child:bg-NiceGray gap-5 pt-5 lg:pt-0 child:aspect-[12/2.5] lg:child:aspect-[12/2]  lg:child:m-3 lg:-m-3 child:rounded-lg lg:child:bg-[#303030] overflow-hidden px-4">
-        {status === "pending" && (
-          <>
-            <LoadingTemplate></LoadingTemplate>
-            <LoadingTemplate></LoadingTemplate>
-            <LoadingTemplate></LoadingTemplate>
-            <LoadingTemplate></LoadingTemplate>
-            <LoadingTemplate></LoadingTemplate>
-            <LoadingTemplate></LoadingTemplate>
-          </>
-        )}
+        {/* Loading */}
+        {status === "pending" &&
+          Array.from({ length: 6 }, (_, index) => (
+            <LoadingTemplate key={index}></LoadingTemplate>
+          ))}
+        {/* Sucess */}
         {status === "success" &&
           data.exercises.map((exercise) => {
             return <Exercise key={exercise._id} exercise={exercise}></Exercise>;
