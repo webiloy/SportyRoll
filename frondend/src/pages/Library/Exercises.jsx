@@ -8,9 +8,13 @@ import Exercise from "./components/Exercise";
 import LoadingTemplate from "./components/LoadingTemplate";
 export function Exercises() {
   const [search, setSearch] = useState("");
-  const { data, status } = useQuery({
-    queryKey: ["ExerciseSearch", search],
-    queryFn: () => Search(search),
+  const [filterObject, setFilterObject] = useState({
+    difficulty: [],
+    muscles: [],
+  });
+  const { data, status, refetch } = useQuery({
+    queryKey: ["ExerciseSearch", search, filterObject],
+    queryFn: () => Search(search, filterObject),
     retry: false,
   });
   return (
@@ -22,7 +26,11 @@ export function Exercises() {
         <ul className="flex gap-6 lg:px-0 px-2">
           <li className="flex gap-2 items-center">
             {/* <MdTune></MdTune> Filter */}
-            <Filter></Filter>
+            <Filter
+              filterObject={filterObject}
+              setFilterObject={setFilterObject}
+              refetch={refetch}
+            ></Filter>
           </li>
           <li className="text-secondary-text flex gap-1 items-center">
             Sort by:

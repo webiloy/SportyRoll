@@ -11,19 +11,30 @@ const addExercise = asyncHandler(async (req, res) => {
 });
 const searchExercise = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { category } = req.query;
-  const name = id.replaceAll("-", " ");
-  // Search with name
-  let query = { name: { $regex: new RegExp(name, "i") } };
-  // Category
-  if (category && category.toLowerCase() !== "featured")
-    query.category = category;
-  // The Search
-  const exercises = await Exercise.find(query);
-  // Response
-  if (exercises.length === 0)
-    return res.status(400).json({ message: "No Exercises Found" });
-  else res.status(200).json({ exercises: exercises });
+  const { muscles, difficulty } = req.query;
+  let query = {};
+  if (id !== "none") {
+    const name = id.replaceAll("-", " ");
+    query.name = { $regex: new RegExp(name, "i") };
+  }
+  if (muscles) {
+    const musclesArray = muscles.split(","); // Convert string to an array
+    query["muscles.muscles_primary"] = { $in: musclesArray };
+  }
+  if (difficulty !== undefined && difficulty !== "0") {
+    const difficultyArray = difficulty.split(",").map(Number);
+    query.difficulty = { $in: difficultyArray };
+  }
+  try {
+    const exercises = await Exercise.find(query);
+    if (exercises.length === 0) {
+      return res.status(400).json({ message: "No Exercises Found" });
+    } else {
+      return res.status(200).json({ exercises });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "Error fetching exercises" });
+  }
 });
 
 module.exports = {
